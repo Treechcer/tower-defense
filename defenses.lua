@@ -1,4 +1,5 @@
 local map = require("map")
+local defenseValues = require("defenseValues")
 
 defenses = {
     pickedDefenses = {
@@ -30,7 +31,7 @@ end
 
 function defenses.draw()
     for key, value in pairs(defenses.built) do
-        love.graphics.setColor(0,0,1)
+        love.graphics.setColor(defenseValues[value.defense].sprite)
         love.graphics.rectangle("fill", (value.x - 1) * map.blockSize + map.blockSize * 1.75, (value.y - 1) * map.blockSize, map.blockSize, map.blockSize)
     end
 end
