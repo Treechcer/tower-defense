@@ -24,7 +24,18 @@ function love.mousepressed(x, y, button, isTouch)
             tileX = math.floor((x - map.blockSize * 1.75) / map.blockSize) + 1
             tileY = math.floor(y / map.blockSize) + 1
 
-            table.insert(defenses.built, {x = tileX, y = tileY, defense = defenses.pickedDefenses[defenses.selected]})
+            exists = false
+
+            for key, value in pairs(defenses.built) do
+                if value.x == tileX and value.y == tileY then
+                    exists = true
+                    break
+                end
+            end
+            
+            if not exists then
+                table.insert(defenses.built, {x = tileX, y = tileY, defense = defenses.pickedDefenses[defenses.selected]})
+            end
         end
     end
 end
