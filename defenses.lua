@@ -17,7 +17,7 @@ defenses = {
 }
 
 function defenses.buyDraw()
-    local offset = 5
+    local offset = 5 + 80
     for i = 0, #defenses.pickedDefenses - 1 do
         if i + 1 == defenses.selected then
             love.graphics.setColor(1,1,1)

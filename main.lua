@@ -3,6 +3,8 @@ love = require("love")
 function love.load()
    map = require("map")
    defenses = require("defenses")
+   defenseValues = require("defenseValues")
+   game = require("game")
 end
 
 function love.draw()
@@ -17,24 +19,28 @@ end
 
 function love.mousepressed(x, y, button, isTouch)
     if button == 1 then
-        if (x >= 5 and x <= defenses.UIsize + 5) and (y >= 5 and y <= (defenses.UIsize + 5) * #defenses.pickedDefenses) then
-            defenses.selected = math.ceil(y / (defenses.UIsize + 5))
+        if (x >= 5 and x <= 5 + defenses.UIsize) and (y >= 5 + 80 and y <= 5 + 80 + (#defenses.pickedDefenses * (defenses.UIsize + 5))) then
+            defenses.selected = math.floor((y - 85) / (defenses.UIsize + 5)) + 1
         elseif x >= map.blockSize * 1.75 and defenses.selected ~= 0 then
 
-            tileX = math.floor((x - map.blockSize * 1.75) / map.blockSize) + 1
-            tileY = math.floor(y / map.blockSize) + 1
-
-            exists = false
-
-            for key, value in pairs(defenses.built) do
-                if value.x == tileX and value.y == tileY then
-                    exists = true
-                    break
-                end
-            end
+            if game.money >= defenseValues[defenses.pickedDefenses[defenses.selected]].cost then
+                game.money = game.money - defenseValues[defenses.pickedDefenses[defenses.selected]].cost
             
-            if not exists then
-                table.insert(defenses.built, {x = tileX, y = tileY, defense = defenses.pickedDefenses[defenses.selected]})
+                tileX = math.floor((x - map.blockSize * 1.75) / map.blockSize) + 1
+                tileY = math.floor((y) / map.blockSize) + 1
+
+                exists = false
+
+                for key, value in pairs(defenses.built) do
+                    if value.x == tileX and value.y == tileY then
+                        exists = true
+                        break
+                    end
+                end
+                
+                if not exists then
+                    table.insert(defenses.built, {x = tileX, y = tileY, defense = defenses.pickedDefenses[defenses.selected]})
+                end
             end
         end
     end
