@@ -11,6 +11,8 @@ function love.draw()
     map.draw()
     defenses.buyDraw()
     defenses.draw()
+
+    love.graphics.print(game.money, 100, 100)
 end
 
 function love.update(dt)
@@ -23,9 +25,18 @@ function love.mousepressed(x, y, button, isTouch)
             defenses.selected = math.floor((y - 85) / (defenses.UIsize + 5)) + 1
         elseif x >= map.blockSize * 1.75 and defenses.selected ~= 0 then
 
-            if game.money >= defenseValues[defenses.pickedDefenses[defenses.selected]].cost then
+            local canPlace = false
+
+            if defenses.pickedDefenses[defenses.selected] == "generator" and defenseValues[defenses.pickedDefenses[defenses.selected]].count == 0 then
+                canPlace = true
+                defenseValues[defenses.pickedDefenses[defenses.selected]].count = defenseValues[defenses.pickedDefenses[defenses.selected]].count + 1
+            elseif game.money >= defenseValues[defenses.pickedDefenses[defenses.selected]].cost then
                 game.money = game.money - defenseValues[defenses.pickedDefenses[defenses.selected]].cost
-            
+                defenseValues[defenses.pickedDefenses[defenses.selected]].count = defenseValues[defenses.pickedDefenses[defenses.selected]].count + 1
+                canPlace = true
+            end
+
+            if canPlace then
                 tileX = math.floor((x - map.blockSize * 1.75) / map.blockSize) + 1
                 tileY = math.floor((y) / map.blockSize) + 1
 
@@ -41,6 +52,7 @@ function love.mousepressed(x, y, button, isTouch)
                 if not exists then
                     table.insert(defenses.built, {x = tileX, y = tileY, defense = defenses.pickedDefenses[defenses.selected]})
                 end
+
             end
         end
     end
