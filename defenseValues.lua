@@ -10,6 +10,7 @@ defenseValues = {
     shooter = {
         sprite = {0,1,1},
         cost = 125,
+        plantCoolDown = 12,
 
         count = 0, -- this is how many of there are spawned
     },
@@ -17,6 +18,7 @@ defenseValues = {
     generator = {
         sprite = {0,0,1},
         cost = 50,
+        plantCoolDown = 10,
 
         count = 0
     },
@@ -24,6 +26,7 @@ defenseValues = {
     tank = {
         sprite = {1,0,1},
         cost = 25,
+        plantCoolDown = 7,
 
         count = 0
     }

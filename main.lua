@@ -5,6 +5,8 @@ function love.load()
    defenses = require("defenses")
    defenseValues = require("defenseValues")
    game = require("game")
+
+   defenses.init()
 end
 
 function love.draw()
@@ -12,28 +14,34 @@ function love.draw()
     defenses.buyDraw()
     defenses.draw()
 
+    love.graphics.setColor(1,1,1)
     love.graphics.print(game.money, 100, 100)
 end
 
 function love.update(dt)
-    
+    defenses.colldownReset(dt)
 end
 
 function love.mousepressed(x, y, button, isTouch)
+    local defensePicked = defenses.pickedDefenses[defenses.selected]
     if button == 1 then
         if (x >= 5 and x <= 5 + defenses.UIsize) and (y >= 5 + 80 and y <= 5 + 80 + (#defenses.pickedDefenses * (defenses.UIsize + 5))) then
             defenses.selected = math.floor((y - 85) / (defenses.UIsize + 5)) + 1
         elseif x >= map.blockSize * 1.75 and defenses.selected ~= 0 then
 
             local canPlace = false
+            local defValuesPickedDefense = defenseValues[defensePicked]
+            local isCooledDown = defenses.coolDowns[defensePicked] >= defValuesPickedDefense.plantCoolDown
 
-            if defenses.pickedDefenses[defenses.selected] == "generator" and defenseValues[defenses.pickedDefenses[defenses.selected]].count == 0 then
+            if defensePicked == "generator" and defValuesPickedDefense.count == 0 and isCooledDown then
                 canPlace = true
-                defenseValues[defenses.pickedDefenses[defenses.selected]].count = defenseValues[defenses.pickedDefenses[defenses.selected]].count + 1
-            elseif game.money >= defenseValues[defenses.pickedDefenses[defenses.selected]].cost then
-                game.money = game.money - defenseValues[defenses.pickedDefenses[defenses.selected]].cost
-                defenseValues[defenses.pickedDefenses[defenses.selected]].count = defenseValues[defenses.pickedDefenses[defenses.selected]].count + 1
+                defValuesPickedDefense.count = defValuesPickedDefense.count + 1
+                defenses.coolDowns[defensePicked] = 0
+            elseif game.money >= defValuesPickedDefense.cost and isCooledDown then
+                game.money = game.money - defValuesPickedDefense.cost
+                defValuesPickedDefense.count = defValuesPickedDefense.count + 1
                 canPlace = true
+                defenses.coolDowns[defensePicked] = 0
             end
 
             if canPlace then
@@ -50,7 +58,7 @@ function love.mousepressed(x, y, button, isTouch)
                 end
                 
                 if not exists then
-                    table.insert(defenses.built, {x = tileX, y = tileY, defense = defenses.pickedDefenses[defenses.selected]})
+                    table.insert(defenses.built, {x = tileX, y = tileY, defense = defensePicked})
                 end
 
             end

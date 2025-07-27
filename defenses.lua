@@ -14,7 +14,15 @@ defenses = {
 
     UIsize = 70,
     selected = 0,
+
+    coolDowns = {},
 }
+
+function defenses.init()
+    for key, value in pairs(defenses.pickedDefenses) do
+        defenses.coolDowns[value] = defenseValues[value].plantCoolDown
+    end
+end
 
 function defenses.buyDraw()
     local offset = 5 + 80
@@ -33,6 +41,12 @@ function defenses.draw()
     for key, value in pairs(defenses.built) do
         love.graphics.setColor(defenseValues[value.defense].sprite)
         love.graphics.rectangle("fill", (value.x - 1) * map.blockSize + map.blockSize * 1.75, (value.y - 1) * map.blockSize, map.blockSize, map.blockSize)
+    end
+end
+
+function defenses.colldownReset(dt)
+    for key, value in pairs(defenses.coolDowns) do
+        defenses.coolDowns[key] = value + dt
     end
 end
 
