@@ -8,8 +8,8 @@ defenses = {
         "tank"
     },
 
-    built = { -- it's table of tables, every table in it has X Y position
-
+    built = { -- it's table of tables, every table in it has X Y position and other things
+        
     },
 
     UIsize = 70,
@@ -47,6 +47,20 @@ end
 function defenses.colldownReset(dt)
     for key, value in pairs(defenses.coolDowns) do
         defenses.coolDowns[key] = value + dt
+    end
+
+    for i = 1, #defenses.built do
+        if defenses.built[i].defense == "generator" then
+            if defenses.built[i].cooldown == nil then
+                defenses.built[i].cooldown = 0
+            end
+
+            --for key, value in pairs(defenses.built[i]) do
+            --    print(i, key, " : ", value)
+            --end
+
+            defenses.built[i].cooldown = defenses.built[i].cooldown + dt
+        end
     end
 end
 

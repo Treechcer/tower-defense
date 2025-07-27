@@ -20,11 +20,18 @@ end
 
 function love.update(dt)
     defenses.colldownReset(dt)
+
+    for i = 1, #defenses.built do
+        if defenses.built[i].defense == "generator" then
+            defenseValues.generator.generate(defenses.built[i])
+        end
+    end
 end
 
 function love.mousepressed(x, y, button, isTouch)
     local defensePicked = defenses.pickedDefenses[defenses.selected]
     if button == 1 then
+        local bonus = {}
         if (x >= 5 and x <= 5 + defenses.UIsize) and (y >= 5 + 80 and y <= 5 + 80 + (#defenses.pickedDefenses * (defenses.UIsize + 5))) then
             defenses.selected = math.floor((y - 85) / (defenses.UIsize + 5)) + 1
         elseif x >= map.blockSize * 1.75 and defenses.selected ~= 0 then
@@ -37,6 +44,8 @@ function love.mousepressed(x, y, button, isTouch)
                 canPlace = true
                 defValuesPickedDefense.count = defValuesPickedDefense.count + 1
                 defenses.coolDowns[defensePicked] = 0
+
+                table.insert(bonus, 0)
             elseif game.money >= defValuesPickedDefense.cost and isCooledDown then
                 game.money = game.money - defValuesPickedDefense.cost
                 defValuesPickedDefense.count = defValuesPickedDefense.count + 1
@@ -57,8 +66,11 @@ function love.mousepressed(x, y, button, isTouch)
                     end
                 end
                 
-                if not exists then
+                if not exists and bonus == {} then
                     table.insert(defenses.built, {x = tileX, y = tileY, defense = defensePicked})
+                elseif not exists then
+                    table.insert(defenses.built, {x = tileX, y = tileY, defense = defensePicked})
+                    defenses.built[#defenses.built].cooldown = bonus[1]
                 end
 
             end
