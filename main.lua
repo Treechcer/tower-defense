@@ -1,24 +1,27 @@
 love = require("love")
 
 function love.load()
-   map = require("map")
-   defenses = require("defenses")
-   defenseValues = require("defenseValues")
-   game = require("game")
+    map = require("map")
+    defenses = require("defenses")
+    defenseValues = require("defenseValues")
+    game = require("game")
+    enemy = require("enemy")
 
-   defenses.init()
+    defenses.init()
 end
 
 function love.draw()
     map.draw()
     defenses.buyDraw()
     defenses.draw()
+    enemy.draw()
 
     love.graphics.setColor(1,1,1)
     love.graphics.print(game.money, 100, 100)
 end
 
 function love.update(dt)
+    enemy.move(dt)
     defenses.colldownReset(dt)
 
     for i = 1, #defenses.built do
