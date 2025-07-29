@@ -1,7 +1,18 @@
 map = {
     width = 9,
     height = 8,
-    blockSize = 75
+    blockSize = 75,
+
+    enemyLanes = {
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+    }
 }
 
 function map.draw()
