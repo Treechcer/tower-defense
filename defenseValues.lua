@@ -1,3 +1,6 @@
+map = require("map")
+projectile = require("projectile")
+
 defenseValues = {
     --[[
         "shooter",
@@ -11,6 +14,8 @@ defenseValues = {
         sprite = {0,1,1},
         cost = 125,
         plantCoolDown = 12,
+
+        shootCoolDown = 0.5,
 
         count = 0, -- this is how many of there are spawned
     },
@@ -44,12 +49,17 @@ function defenseValues.generator.generate(generator)
         local range = math.random(r[1], r[2])
         local percentage = math.floor(math.random() * 70) * (range / r[1]) + gen.generatorCoolDown
 
-        print(percentage, "%")
-
         if percentage >= 90 then
             game.money = game.money + 25 + (5 * (math.random(0,1) * 2 -1))
             generator.cooldown = 0
         end
+    end
+end
+
+function defenseValues.shooter.shoot(shooter)
+    if map.enemyLanes[shooter.y] and shooter.cooldown >= defenseValues[shooter.defense].shootCoolDown then
+        projectile.create(shooter.x + (map.blockSize * 1.75 + map.blockSize / 3), shooter.y + (map.blockSize / 3), 100, {0,1,1}, 10, 25, 25)
+        shooter.cooldown = 0
     end
 end
 

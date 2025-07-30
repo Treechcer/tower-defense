@@ -15,6 +15,7 @@ function love.draw()
     defenses.buyDraw()
     defenses.draw()
     enemy.draw()
+    projectile.draw()
 
     love.graphics.setColor(1,1,1)
     love.graphics.print(game.money, 100, 100)
@@ -23,10 +24,13 @@ end
 function love.update(dt)
     enemy.move(dt)
     defenses.colldownReset(dt)
+    projectile.move(dt)
 
     for i = 1, #defenses.built do
         if defenses.built[i].defense == "generator" then
             defenseValues.generator.generate(defenses.built[i])
+        elseif defenses.built[i].defense == "shooter" then
+            defenseValues.shooter.shoot(defenses.built[i])
         end
     end
 end
@@ -46,6 +50,13 @@ function love.mousepressed(x, y, button, isTouch)
             if defensePicked == "generator" and defValuesPickedDefense.count == 0 and isCooledDown then
                 canPlace = true
                 defValuesPickedDefense.count = defValuesPickedDefense.count + 1
+                defenses.coolDowns[defensePicked] = 0
+
+                table.insert(bonus, 0)
+            elseif defensePicked == "shooter" and game.money >= defValuesPickedDefense.cost and isCooledDown then
+                game.money = game.money - defValuesPickedDefense.cost
+                defValuesPickedDefense.count = defValuesPickedDefense.count + 1
+                canPlace = true
                 defenses.coolDowns[defensePicked] = 0
 
                 table.insert(bonus, 0)

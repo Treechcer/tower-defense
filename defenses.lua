@@ -60,6 +60,8 @@ function defenses.colldownReset(dt)
             --end
 
             defenses.built[i].cooldown = defenses.built[i].cooldown + dt
+        else
+            defenses.built[i].cooldown = defenses.built[i].cooldown + dt
         end
     end
 end
