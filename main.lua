@@ -6,8 +6,10 @@ function love.load()
     defenseValues = require("defenseValues")
     game = require("game")
     enemy = require("enemy")
+    levelReader = require("levelReader")
 
     defenses.init()
+    levelReader.readLevel("level1")
 end
 
 function love.draw()
@@ -25,6 +27,7 @@ function love.update(dt)
     enemy.move(dt)
     defenses.colldownReset(dt)
     projectile.move(dt)
+    levelReader.logic(dt)
     projectile.collisionCheck()
 
     for i = 1, #defenses.built do

@@ -30,6 +30,6 @@ function enemy.sortEnemyByLine()
     table.sort(enemy.enemyList, function(a, b) return a.line < b.line end)
 end
 
-enemy.Create(1, 50, enemyValues.default.type)
+--enemy.Create(1, 50, enemyValues.default.type)
 
 return enemy
