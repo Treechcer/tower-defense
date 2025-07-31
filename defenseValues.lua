@@ -12,6 +12,7 @@ defenseValues = {
 
     shooter = {
         sprite = {0,1,1},
+        ammoSprite = {1,1,1},
         cost = 125,
         plantCoolDown = 12,
 
@@ -58,7 +59,7 @@ end
 
 function defenseValues.shooter.shoot(shooter)
     if map.enemyLanes[shooter.y] and shooter.cooldown >= defenseValues[shooter.defense].shootCoolDown then
-        projectile.create(shooter.x + (map.blockSize * 1.75 + map.blockSize / 3), shooter.y + (map.blockSize / 3), 100, {0,1,1}, 10, 25, 25)
+        projectile.create(shooter.x + (map.blockSize * 1.75 + map.blockSize / 3), shooter.y + (map.blockSize / 3), 100, {0,1,1}, 10, 25, 25, shooter.defense)
         shooter.cooldown = 0
     end
 end

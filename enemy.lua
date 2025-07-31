@@ -20,7 +20,7 @@ function enemy.draw()
 end
 
 function enemy.Create(lineNum, xPos, enemyType)
-    table.insert(enemy.enemyList, {line = lineNum, x = xPos, type = enemyType})
+    table.insert(enemy.enemyList, {line = lineNum, x = xPos, type = enemyType, health = enemyValues[enemyType].health})
     map.enemyLanes[lineNum] = true
 
     enemy.sortEnemyByLine()

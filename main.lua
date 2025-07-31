@@ -25,6 +25,7 @@ function love.update(dt)
     enemy.move(dt)
     defenses.colldownReset(dt)
     projectile.move(dt)
+    projectile.collisionCheck()
 
     for i = 1, #defenses.built do
         if defenses.built[i].defense == "generator" then
