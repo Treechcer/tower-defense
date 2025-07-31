@@ -38,22 +38,7 @@ function projectile.collisionCheck()
                 table.remove(projectile.active, i)
 
                 if en.health <= 0 then
-                    table.remove(enemy.enemyList, j)
-                    local line = en.line
-                    enemy.sortEnemyByLine()
-
-                    local found = false
-                    for x = 1, #enemy.enemyList do
-                        if line == enemy.enemyList[x].line then
-                            found = true
-                            break
-                        end
-                    end
-
-                    if not found then
-                        map.enemyLanes[line] = false
-                    end
-
+                    enemy.die(j, en)
                 end
             end
         end

@@ -4,7 +4,7 @@ levelReader = {
     time = 0,
     index = 1,
     flagNow = "wait",
-    flagTime = 5
+    flagTime = 0.1
 }
 
 function levelReader.readLevel(level)

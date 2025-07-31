@@ -1,4 +1,4 @@
-level1 = {
+level = {
 
     {
         time = 1,
@@ -8,7 +8,6 @@ level1 = {
             {line = 2, type = "default"}
         }
     },
-
     {
         time = 6,
         flag = "attack",
@@ -20,4 +19,4 @@ level1 = {
 
 }
 
-return level1
+return level
