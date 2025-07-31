@@ -26,6 +26,15 @@ function map.draw()
             love.graphics.rectangle("fill", (x - 1) * map.blockSize + map.blockSize * 1.75, (y - 1) * map.blockSize, map.blockSize, map.blockSize)
         end
     end
+    
+    x = 0
+    for y = 1, map.height do
+        color = ((y + 1) % 2 == 0) and {0.4, 0.4, 0.4} or {0.2, 0.2, 0.2}
+
+        love.graphics.setColor(color)
+
+        love.graphics.rectangle("fill", (x - 1) * map.blockSize + map.blockSize * 1.75, (y - 1) * map.blockSize, map.blockSize, map.blockSize)
+    end
 end
 
 return map
