@@ -1,4 +1,4 @@
-enemyValues = require("enemyValues")
+enemyValues = require("enemy.enemyValues")
 game = require("game")
 map = require("map")
 

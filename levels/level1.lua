@@ -10,10 +10,10 @@ level1 = {
     },
 
     {
-        time = 3,
+        time = 6,
         flag = "attack",
         enemies = {
-            {line = 3, type = "default"},
+            {line = 2, type = "default"},
             {line = 4, type = "default"}
         }
     }

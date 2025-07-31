@@ -1,4 +1,4 @@
-enemy = require("enemy")
+enemy = require("enemy.enemy")
 
 levelReader = {
     time = 0,
@@ -8,7 +8,7 @@ levelReader = {
 }
 
 function levelReader.readLevel(level)
-    levelReader.level = require(level)
+    levelReader.level = require("levels/" .. level)
 end
 
 function levelReader.spawn()

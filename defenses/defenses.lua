@@ -1,5 +1,5 @@
 local map = require("map")
-local defenseValues = require("defenseValues")
+local defenseValues = require("defenses.defenseValues")
 
 defenses = {
     pickedDefenses = {

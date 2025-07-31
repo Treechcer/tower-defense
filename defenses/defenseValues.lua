@@ -1,5 +1,5 @@
 map = require("map")
-projectile = require("projectile")
+projectile = require("defenses.projectile")
 
 defenseValues = {
     --[[
@@ -58,8 +58,9 @@ function defenseValues.generator.generate(generator)
 end
 
 function defenseValues.shooter.shoot(shooter)
+    --print(map.enemyLanes[shooter.y], shooter.y)
     if map.enemyLanes[shooter.y] and shooter.cooldown >= defenseValues[shooter.defense].shootCoolDown then
-        projectile.create(shooter.x + (map.blockSize * 1.75 + map.blockSize / 3), shooter.y + (map.blockSize / 3), 100, {0,1,1}, 10, 25, 25, shooter.defense)
+        projectile.create(((shooter.x - 1) * map.blockSize) + (map.blockSize * 1.75 + map.blockSize / 3), ((shooter.y - 1) * map.blockSize) + (map.blockSize / 3), 100, {0,1,1}, 10, 25, 25, shooter.defense)
         shooter.cooldown = 0
     end
 end
