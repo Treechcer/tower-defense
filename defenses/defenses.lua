@@ -20,6 +20,7 @@ defenses = {
 
 function defenses.reset()
     defenses.built = {}
+    defenses.init()
 end
 
 function defenses.init()

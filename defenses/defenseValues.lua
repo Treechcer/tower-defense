@@ -63,7 +63,7 @@ function defenseValues.shooter.shoot(shooter)
     --print(map.enemyLanes[shooter.y], shooter.y)
     local shoot = false
     for index, value in ipairs(enemy.enemyList) do
-        print(shooter.y, value.line, game.width - value.x, shooter.x * map.blockSize)
+        --print(shooter.y, value.line, game.width - value.x, shooter.x * map.blockSize)
         if (game.width - value.x) > (shooter.x * map.blockSize) and shooter.y == value.line then
             shoot = true
         end
