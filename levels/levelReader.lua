@@ -17,7 +17,6 @@ end
 
 function levelReader.reset()
     enemy.kiullAll()
-    map.reset()
     projectile.reset()
     defenses.reset()
 
@@ -26,14 +25,16 @@ function levelReader.reset()
     levelReader.index = 1
     levelReader.flagNow = "wait"
     levelReader.flagTime = 0.1
+    map.reset()
 end
 
 function levelReader.spawn()
-    if levelReader.level[levelReader.index] == nil then
+    if levelReader.level.wave[levelReader.index] == nil then
         return
     end
-    if levelReader.level[levelReader.index].time <= levelReader.time then
-        for key, value in pairs(levelReader.level[levelReader.index].enemies) do
+    if levelReader.level.wave[levelReader.index].time <= levelReader.time then
+        for key, value in pairs(levelReader.level.wave[levelReader.index].enemies) do
+            --print(value.line, value.type)
             enemy.Create(value.line, 0, value.type)
         end
 

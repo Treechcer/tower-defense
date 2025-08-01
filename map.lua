@@ -1,3 +1,5 @@
+--levelReader = require("levels.levelReader")
+
 map = {
     width = 9,
     height = 8,
@@ -51,10 +53,12 @@ function map.reset()
 end
 
 function map.draw()
+    local levelReader = require("levels.levelReader")
+    local level = levelReader.level.metadata
     for y = 1, map.height do
         for x = 1, map.width do
 
-        color = ((x + y) % 2 == 0) and {0.2, 0.6, 0.2} or {0.25, 0.65, 0.25}
+        color = ((x + y) % 2 == 0) and level.color.main or level.color.second
 
             love.graphics.setColor(color)
 
@@ -65,7 +69,7 @@ function map.draw()
     x = 0
     for y = 1, map.height do
         if map.lawnMowers[y] then
-            color = ((y + 1) % 2 == 0) and {0.4, 0.4, 0.4} or {0.2, 0.2, 0.2}
+            color = ((y + 1) % 2 == 0) and level.lawnMowersColors.main or level.lawnMowersColors.second
 
             love.graphics.setColor(color)
 

@@ -1,15 +1,15 @@
 love = require("love")
 
 function love.load()
+    game = require("game")
+    levelReader = require("levels.levelReader")
+    levelReader.readLevel(game.level)
     map = require("map")
     defenses = require("defenses.defenses")
     defenseValues = require("defenses.defenseValues")
-    game = require("game")
     enemy = require("enemy.enemy")
-    levelReader = require("levels.levelReader")
 
     defenses.init()
-    levelReader.readLevel("level1")
 end
 
 function love.draw()

@@ -17,6 +17,7 @@ defenseValues = {
         ammoSprite = {1,1,1},
         cost = 125,
         plantCoolDown = 12,
+        hp = 100,
 
         shootCoolDown = 0.5,
 
@@ -27,6 +28,7 @@ defenseValues = {
         sprite = {0,0,1},
         cost = 50,
         plantCoolDown = 7,
+        hp = 70,
 
         count = 0,
 
@@ -38,6 +40,7 @@ defenseValues = {
         sprite = {1,0,1},
         cost = 25,
         plantCoolDown = 7,
+        hp = 200,
 
         count = 0
     }
