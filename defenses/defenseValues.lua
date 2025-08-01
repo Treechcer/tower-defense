@@ -1,5 +1,7 @@
 map = require("map")
 projectile = require("defenses.projectile")
+enemy = require("enemy.enemy")
+game = require("game")
 
 defenseValues = {
     --[[
@@ -59,7 +61,15 @@ end
 
 function defenseValues.shooter.shoot(shooter)
     --print(map.enemyLanes[shooter.y], shooter.y)
-    if map.enemyLanes[shooter.y] and shooter.cooldown >= defenseValues[shooter.defense].shootCoolDown then
+    local shoot = false
+    for index, value in ipairs(enemy.enemyList) do
+        print(shooter.y, value.line, game.width - value.x, shooter.x * map.blockSize)
+        if (game.width - value.x) > (shooter.x * map.blockSize) and shooter.y == value.line then
+            shoot = true
+        end
+    end
+
+    if map.enemyLanes[shooter.y] and shooter.cooldown >= defenseValues[shooter.defense].shootCoolDown and shoot then
         projectile.create(((shooter.x - 1) * map.blockSize) + (map.blockSize * 1.75 + map.blockSize / 3), ((shooter.y - 1) * map.blockSize) + (map.blockSize / 3), 100, {0,1,1}, 10, 25, 25, shooter.defense)
         shooter.cooldown = 0
     end
