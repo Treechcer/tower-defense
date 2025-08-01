@@ -2,7 +2,11 @@ game = {
     width = love.graphics.getWidth(),
     height = love.graphics.getHeight(),
 
-    money = 500,
+    defaults = {
+        startMoney = 500
+    }
 }
+
+game.money = game.defaults.startMoney
 
 return game

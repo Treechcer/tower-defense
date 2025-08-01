@@ -18,6 +18,10 @@ defenses = {
     coolDowns = {},
 }
 
+function defenses.reset()
+    defenses.built = {}
+end
+
 function defenses.init()
     for key, value in pairs(defenses.pickedDefenses) do
         defenses.coolDowns[value] = defenseValues[value].plantCoolDown

@@ -45,4 +45,8 @@ function projectile.collisionCheck()
     end
 end
 
+function projectile.reset()
+    projectile.active = {}
+end
+
 return projectile

@@ -17,9 +17,11 @@ function enemy.move(dt)
 
             map.lawnMowers[value.line] = false
         elseif value.x >= game.width - (-1 * map.blockSize + map.blockSize * 1.75 + map.blockSize/2) and not map.lawnMowers[value.line] then
-        
-        -- dying not implemented yet, so here we goo
-        
+        value.health = 0
+        enemy.die(index, value)
+
+        levelReader.reset()
+
         end
 
         index = index + 1
@@ -60,6 +62,10 @@ end
 
 function enemy.sortEnemyByLine()
     table.sort(enemy.enemyList, function(a, b) return a.line < b.line end)
+end
+
+function enemy.kiullAll()
+    enemy.enemyList = {}
 end
 
 --enemy.Create(1, 50, enemyValues.default.type)

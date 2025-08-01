@@ -1,4 +1,8 @@
 enemy = require("enemy.enemy")
+map = require("map")
+game = require("game")
+projectile = require("defenses.projectile")
+defenses = require("defenses.defenses")
 
 levelReader = {
     time = 0,
@@ -9,6 +13,19 @@ levelReader = {
 
 function levelReader.readLevel(level)
     levelReader.level = require("levels/" .. level)
+end
+
+function levelReader.reset()
+    enemy.kiullAll()
+    map.reset()
+    projectile.reset()
+    defenses.reset()
+
+    game.money = game.defaults.startMoney
+    levelReader.time = 0
+    levelReader.index = 1
+    levelReader.flagNow = "wait"
+    levelReader.flagTime = 0.1
 end
 
 function levelReader.spawn()

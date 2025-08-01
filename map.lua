@@ -26,6 +26,30 @@ map = {
     }
 }
 
+function map.reset()
+    map.lawnMowers = {
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+    }
+
+    enemyLanes = {
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+    }
+end
+
 function map.draw()
     for y = 1, map.height do
         for x = 1, map.width do
