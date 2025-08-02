@@ -1,3 +1,5 @@
+scripts = require("levels.importantCustomScripts")
+
 level = {
     metadata = {
         color = {
@@ -7,7 +9,14 @@ level = {
         lawnMowersColors = {
             main = {0.4, 0.4, 0.4},
             second = {0.2, 0.2, 0.2}
-        }
+        },
+        disabledLaneColors = {
+            main = {139 / 255, 69 / 255, 19 / 255},
+            second = {160 / 255, 82 / 255, 45 / 255}
+        },
+        disabledLanes = {
+            1,2,7,8
+        },
     },
     wave = {
         {
@@ -16,7 +25,9 @@ level = {
             enemies = {
                 {line = 1, type = "default"},
                 {line = 2, type = "default"},
-            }
+            },
+
+            customScript = {}
         },
         {
             time = 6,
@@ -24,7 +35,9 @@ level = {
             enemies = {
                 {line = 2, type = "default"},
                 {line = 4, type = "default"}
-            }
+            },
+
+            customScript = {}
         }
     }
 
