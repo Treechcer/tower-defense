@@ -25,6 +25,7 @@ end
 
 function love.update(dt)
     enemy.move(dt)
+    enemy.cooldownAdd(dt)
     defenses.colldownReset(dt)
     projectile.move(dt)
     levelReader.logic(dt)
@@ -85,9 +86,9 @@ function love.mousepressed(x, y, button, isTouch)
                 end
                 
                 if not exists and bonus == {} then
-                    table.insert(defenses.built, {x = tileX, y = tileY, defense = defensePicked})
+                    table.insert(defenses.built, {x = tileX, y = tileY, defense = defensePicked, hp = defenseValues[defensePicked].hp})
                 elseif not exists then
-                    table.insert(defenses.built, {x = tileX, y = tileY, defense = defensePicked})
+                    table.insert(defenses.built, {x = tileX, y = tileY, defense = defensePicked, hp = defenseValues[defensePicked].hp})
                     defenses.built[#defenses.built].cooldown = bonus[1]
                 end
 

@@ -23,6 +23,16 @@ function defenses.reset()
     defenses.init()
 end
 
+function defenses.damagePlant(plant, damage)
+    --print(defenses.built[plant])
+
+    defenses.built[plant].hp = defenses.built[plant].hp - damage
+
+    if defenses.built[plant].hp <= 0 then
+        table.remove(defenses.built, plant)
+    end
+end
+
 function defenses.init()
     for key, value in pairs(defenses.pickedDefenses) do
         defenses.coolDowns[value] = defenseValues[value].plantCoolDown

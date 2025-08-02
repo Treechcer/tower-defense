@@ -9,7 +9,23 @@ enemy = {
 function enemy.move(dt)
     local index = 1
     for key, value in pairs(enemy.enemyList) do
-        value.x = value.x + enemyValues[value.type].speed * dt
+        local hit = false
+        for key0, value0 in pairs(defenses.built) do
+            print(value.lastAttack, value.cooldown)
+            local posCheck = (game.width - value.x) >= (value0.x * map.blockSize)  and (game.width - value.x - 55) <= ((value0.x + 1) * map.blockSize) and value0.y == value.line -- I have no idea why '-55' works, I just tried '-50' and it worked well enough... I'll not investigate further eventho I have guesses
+            if value.lastAttack >= value.attackCooldown and posCheck then
+                defenses.damagePlant(key0, value.damage)
+                hit = true
+                value.lastAttack = 0
+            elseif posCheck then
+                hit = true
+            end
+        end
+
+        if not hit then
+            value.x = value.x + enemyValues[value.type].speed * dt
+        end
+
         if value.x >= game.width - (-1 * map.blockSize + map.blockSize * 1.75 + map.blockSize/2) and map.lawnMowers[value.line] then
             value.health = 0
 
@@ -17,11 +33,10 @@ function enemy.move(dt)
 
             map.lawnMowers[value.line] = false
         elseif value.x >= game.width - (-1 * map.blockSize + map.blockSize * 1.75 + map.blockSize/2) and not map.lawnMowers[value.line] then
-        value.health = 0
-        enemy.die(index, value)
+            value.health = 0
+            enemy.die(index, value)
 
-        levelReader.reset()
-
+            levelReader.reset()
         end
 
         index = index + 1
@@ -53,8 +68,14 @@ function enemy.draw()
     end
 end
 
+function enemy.cooldownAdd(dt)
+    for key, value in pairs(enemy.enemyList) do
+        value.lastAttack = value.lastAttack + dt
+    end
+end
+
 function enemy.Create(lineNum, xPos, enemyType)
-    table.insert(enemy.enemyList, {line = lineNum, x = xPos, type = enemyType, health = enemyValues[enemyType].health})
+    table.insert(enemy.enemyList, {line = lineNum, x = xPos, type = enemyType, health = enemyValues[enemyType].health, damage = enemyValues[enemyType].damage, attackCooldown = enemyValues[enemyType].attackCooldown, lastAttack = 0})
     map.enemyLanes[lineNum] = true
 
     enemy.sortEnemyByLine()
