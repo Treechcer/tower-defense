@@ -36,8 +36,37 @@ map = {
         false,
         false,
         false,
-    }
+    },
+
+    specialTiles = {}, -- these are the special tiles, ther will be all tiles but some will be false and others will be true, true are special false are normal - these tiles can be special in any shape or form
+    specialTilesAbility = {} -- here will be store all of the special tile abilities, for example, if there is on x = 2 a y = 2 special tile that you can't place on, in specialTiles will be on index [2][2] true, and in this table will be store what it does (this sounded as the fastest and easiest way to implement this)
 }
+
+function map.generateSpecialTiles()
+    for y = 1, map.height do
+        local specialTileTable = {}
+        local specialAbilityTable = {}
+        for x = 1, map.width do
+            specialTileTable[x] = false
+            specialAbilityTable[x] = nil
+        end
+
+        map.specialTiles[y] = specialTileTable
+        map.specialTilesAbility[y] = specialAbilityTable
+    end
+end
+
+function map.makeSpecialTile(tileObj)
+
+    --for index, value in ipairs(map.specialTiles) do
+    --    print(index, " ", value)
+    --end
+
+    map.specialTiles[tileObj.y][tileObj.x] = true
+    map.specialTilesAbility[tileObj.y][tileObj.x] = tileObj.ability
+
+    --print(map.specialTilesAbility[tileObj.y][tileObj.x], tileObj.y, tileObj.x)
+end
 
 function map.reset()
     map.lawnMowers = {
@@ -73,13 +102,22 @@ function map.draw()
         else
             colSec = level.disabledLaneColors
         end
+
         for x = 1, map.width do
 
-            color = ((x + y) % 2 == 0) and colSec.main or colSec.second
+            abilityDo = {}
 
-            love.graphics.setColor(color)
+            if map.specialTiles[y][x] then
+                abilityDo = map.doAbilityOfTile(map.specialTilesAbility[y][x])
+            end
 
-            love.graphics.rectangle("fill", (x - 1) * map.blockSize + map.blockSize * 1.75, (y - 1) * map.blockSize, map.blockSize, map.blockSize)
+            if not abilityDo.draw then
+                color = ((x + y) % 2 == 0) and colSec.main or colSec.second
+
+                love.graphics.setColor(color)
+
+                love.graphics.rectangle("fill", (x - 1) * map.blockSize + map.blockSize * 1.75, (y - 1) * map.blockSize, map.blockSize, map.blockSize) 
+            end
         end
     end
     
@@ -102,6 +140,22 @@ function map.draw()
             love.graphics.rectangle("fill", (x - 1) * map.blockSize + map.blockSize * 1.75, (y - 1) * map.blockSize, map.blockSize, map.blockSize)
         end
     end
+end
+
+function map.doAbilityOfTile(ability)
+    obj = {
+        draw = true
+    }
+
+    if ability == "noTile" then
+        obj = {
+            draw = false
+        }
+
+        return obj
+    end
+
+    return obj
 end
 
 function map.disableLane(n) -- n ==> 1 - 8 ==> lane to diable

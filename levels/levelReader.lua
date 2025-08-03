@@ -14,8 +14,18 @@ levelReader = {
 function levelReader.readLevel(level)
     levelReader.level = require("levels/" .. level)
 
+    levelReader.specialTiles()
+
     for key, value in pairs(levelReader.level.metadata.disabledLanes) do
         map.disableLane(value)
+    end
+end
+
+function levelReader.specialTiles()
+    if levelReader.level.metadata.specialTiles ~= nil then
+        for i = 1, #levelReader.level.metadata.specialTiles, 1 do
+            map.makeSpecialTile(levelReader.level.metadata.specialTiles[i])
+        end
     end
 end
 

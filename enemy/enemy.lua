@@ -11,7 +11,7 @@ function enemy.move(dt)
     for key, value in pairs(enemy.enemyList) do
         local hit = false
         for key0, value0 in pairs(defenses.built) do
-            print(value.lastAttack, value.cooldown)
+            -- print(value.lastAttack, value.lastAttack)
             local posCheck = (game.width - value.x) >= (value0.x * map.blockSize)  and (game.width - value.x - 55) <= ((value0.x + 1) * map.blockSize) and value0.y == value.line -- I have no idea why '-55' works, I just tried '-50' and it worked well enough... I'll not investigate further eventho I have guesses
             if value.lastAttack >= value.attackCooldown and posCheck then
                 defenses.damagePlant(key0, value.damage)
