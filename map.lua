@@ -105,13 +105,13 @@ function map.draw()
 
         for x = 1, map.width do
 
-            abilityDo = {}
+            abilityDo = map.doAbilityOfTile("else")
 
             if map.specialTiles[y][x] then
                 abilityDo = map.doAbilityOfTile(map.specialTilesAbility[y][x])
             end
 
-            if not abilityDo.draw then
+            if abilityDo.draw then
                 color = ((x + y) % 2 == 0) and colSec.main or colSec.second
 
                 love.graphics.setColor(color)
@@ -144,18 +144,20 @@ end
 
 function map.doAbilityOfTile(ability)
     obj = {
-        draw = true
+        draw = true,
+        place = true
     }
 
-    if ability == "noTile" then
+    if ability == "noPlace" then
         obj = {
-            draw = false
+            draw = false,
+            place = false
         }
 
         return obj
+    else
+        return obj
     end
-
-    return obj
 end
 
 function map.disableLane(n) -- n ==> 1 - 8 ==> lane to diable

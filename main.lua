@@ -48,10 +48,16 @@ function love.mousepressed(x, y, button, isTouch)
         if (x >= 5 and x <= 5 + defenses.UIsize) and (y >= 5 + 80 and y <= 5 + 80 + (#defenses.pickedDefenses * (defenses.UIsize + 5))) then
             defenses.selected = math.floor((y - 85) / (defenses.UIsize + 5)) + 1
         elseif x >= map.blockSize * 1.75 and defenses.selected ~= 0 then
+            local tileX = math.floor((x - map.blockSize * 1.75) / map.blockSize) + 1
+            local tileY = math.floor((y) / map.blockSize) + 1
+            
+            local abilities = map.doAbilityOfTile("else")
 
-            local index = math.floor((y) / map.blockSize) + 1
+            if map.specialTiles[tileY][tileX] then
+                abilities = map.doAbilityOfTile(map.specialTilesAbility[tileY][tileX])
+            end
 
-            if map.disabledLanes[index] then
+            if not abilities.place or map.disabledLanes[tileY] then
                 return
             end
 
@@ -80,9 +86,6 @@ function love.mousepressed(x, y, button, isTouch)
             end
 
             if canPlace then
-                local tileX = math.floor((x - map.blockSize * 1.75) / map.blockSize) + 1
-                local tileY = math.floor((y) / map.blockSize) + 1
-                
                 exists = false
 
                 for key, value in pairs(defenses.built) do
