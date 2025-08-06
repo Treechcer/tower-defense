@@ -31,7 +31,12 @@ function levelReader.readLevel(level)
 
     local enCount = 0
     for i = 1, #levelReader.level.wave do
-        enCount = enCount + #levelReader.level.wave[i].enemies
+        local enemyTable = levelReader.level.wave[i].enemies
+        for j = 1, #enemyTable, 1 do
+            if not map.disabledLanes[enemyTable[j].line] then
+                enCount = enCount + 1
+            end
+        end
     end
 
     levelReader.enCount = enCount
@@ -71,8 +76,10 @@ function levelReader.spawn()
     if levelReader.level.wave[levelReader.index].time <= levelReader.time then
         for key, value in pairs(levelReader.level.wave[levelReader.index].enemies) do
             --print(value.line, value.type)
-            enemy.Create(value.line, 0, value.type)
-            levelReader.enSpawned = levelReader.enSpawned + 1
+            local tempBool = enemy.Create(value.line, 0, value.type)
+            if tempBool then
+                levelReader.enSpawned = levelReader.enSpawned + 1
+            end
         end
 
         levelReader.percent = levelReader.enSpawned / levelReader.enCount

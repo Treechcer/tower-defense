@@ -79,8 +79,12 @@ function enemy.Create(lineNum, xPos, enemyType)
         table.insert(enemy.enemyList, {line = lineNum, x = xPos, type = enemyType, health = enemyValues[enemyType].health, damage = enemyValues[enemyType].damage, attackCooldown = enemyValues[enemyType].attackCooldown, lastAttack = 0})
         map.enemyLanes[lineNum] = true
 
-        enemy.sortEnemyByLine() 
+        enemy.sortEnemyByLine()
+
+        return true
     end
+
+    return false
 end
 
 function enemy.sortEnemyByLine()
