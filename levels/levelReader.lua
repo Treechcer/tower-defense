@@ -8,7 +8,16 @@ levelReader = {
     time = 0,
     index = 1,
     flagNow = "wait",
-    flagTime = 0.1
+    flagTime = 0.1,
+    percent = 0,
+    enSpawned = 0,
+
+    bar = {
+        width = 150,
+        height = 25,
+        x = 0,
+        y = 0
+    }
 }
 
 function levelReader.readLevel(level)
@@ -19,6 +28,15 @@ function levelReader.readLevel(level)
     for key, value in pairs(levelReader.level.metadata.disabledLanes) do
         map.disableLane(value)
     end
+
+    local enCount = 0
+    for i = 1, #levelReader.level.wave do
+        enCount = enCount + #levelReader.level.wave[i].enemies
+    end
+
+    levelReader.enCount = enCount
+    levelReader.percent = 0
+    levelReader.enSpawned = 0
 end
 
 function levelReader.specialTiles()
@@ -39,6 +57,9 @@ function levelReader.reset()
     levelReader.index = 1
     levelReader.flagNow = "wait"
     levelReader.flagTime = 0.1
+    levelReader.percent = 0
+    levelReader.enSpawned = 0
+
     map.reset()
 end
 
@@ -51,7 +72,10 @@ function levelReader.spawn()
         for key, value in pairs(levelReader.level.wave[levelReader.index].enemies) do
             --print(value.line, value.type)
             enemy.Create(value.line, 0, value.type)
+            levelReader.enSpawned = levelReader.enSpawned + 1
         end
+
+        levelReader.percent = levelReader.enSpawned / levelReader.enCount
 
         local CS = levelReader.level.wave[levelReader.index].customScript
 
@@ -63,6 +87,13 @@ function levelReader.spawn()
 
         levelReader.index = levelReader.index + 1
     end
+end
+
+function levelReader.drawBar()
+    love.graphics.rectangle("fill", levelReader.bar.x, levelReader.bar.y, levelReader.bar.width, levelReader.bar.height)
+
+    love.graphics.setColor(1, 0, 0)
+    love.graphics.rectangle("fill", levelReader.bar.width - levelReader.bar.x, levelReader.bar.y, -(levelReader.bar.width * levelReader.percent), levelReader.bar.height)
 end
 
 function levelReader.logic(dt)

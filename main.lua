@@ -19,8 +19,9 @@ function love.draw()
     defenses.draw()
     enemy.draw()
     projectile.draw()
+    levelReader.drawBar()
 
-    love.graphics.setColor(1,1,1)
+    love.graphics.setColor(1, 1, 1)
     love.graphics.print(game.money, 100, 100)
 end
 
@@ -50,7 +51,7 @@ function love.mousepressed(x, y, button, isTouch)
         elseif x >= map.blockSize * 1.75 and defenses.selected ~= 0 then
             local tileX = math.floor((x - map.blockSize * 1.75) / map.blockSize) + 1
             local tileY = math.floor((y) / map.blockSize) + 1
-            
+
             local abilities = map.doAbilityOfTile("else")
 
             if map.specialTiles[tileY][tileX] then
@@ -94,14 +95,15 @@ function love.mousepressed(x, y, button, isTouch)
                         break
                     end
                 end
-                
+
                 if not exists and bonus == {} then
-                    table.insert(defenses.built, {x = tileX, y = tileY, defense = defensePicked, hp = defenseValues[defensePicked].hp})
+                    table.insert(defenses.built,
+                        { x = tileX, y = tileY, defense = defensePicked, hp = defenseValues[defensePicked].hp })
                 elseif not exists then
-                    table.insert(defenses.built, {x = tileX, y = tileY, defense = defensePicked, hp = defenseValues[defensePicked].hp})
+                    table.insert(defenses.built,
+                        { x = tileX, y = tileY, defense = defensePicked, hp = defenseValues[defensePicked].hp })
                     defenses.built[#defenses.built].cooldown = bonus[1]
                 end
-
             end
         end
     end
