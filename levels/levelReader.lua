@@ -13,12 +13,17 @@ levelReader = {
     enSpawned = 0,
 
     bar = {
-        width = 150,
-        height = 25,
+        width = 25,
+        height = 150,
         x = 0,
         y = 0
     }
 }
+
+--these magic number are set because they look good not because of nay calculations
+
+levelReader.bar.x = levelReader.bar.width / 1.52
+levelReader.bar.y = (game.height / 2) + (levelReader.bar.height / 1.25)
 
 function levelReader.readLevel(level)
     levelReader.level = require("levels/" .. level)
@@ -100,7 +105,7 @@ function levelReader.drawBar()
     love.graphics.rectangle("fill", levelReader.bar.x, levelReader.bar.y, levelReader.bar.width, levelReader.bar.height)
 
     love.graphics.setColor(1, 0, 0)
-    love.graphics.rectangle("fill", levelReader.bar.width - levelReader.bar.x, levelReader.bar.y, -(levelReader.bar.width * levelReader.percent), levelReader.bar.height)
+    love.graphics.rectangle("fill", levelReader.bar.x + levelReader.bar.width, levelReader.bar.y + levelReader.bar.height, - levelReader.bar.width, -(levelReader.bar.height * levelReader.percent))
 end
 
 function levelReader.logic(dt)
