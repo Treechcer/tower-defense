@@ -46,6 +46,7 @@ end
 function enemy.die(index, value)
     table.remove(enemy.enemyList, index)
     local line = value.line
+    levelReader.alive = levelReader.alive - 1
     enemy.sortEnemyByLine()
 
     local found = false

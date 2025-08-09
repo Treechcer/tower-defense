@@ -11,6 +11,7 @@ levelReader = {
     flagTime = 0.1,
     percent = 0,
     enSpawned = 0,
+    alive = 0,
 
     bar = {
         width = 25,
@@ -84,6 +85,7 @@ function levelReader.spawn()
             local tempBool = enemy.Create(value.line, 0, value.type)
             if tempBool then
                 levelReader.enSpawned = levelReader.enSpawned + 1
+                levelReader.alive = levelReader.alive + 1
             end
         end
 
@@ -119,6 +121,10 @@ function levelReader.logic(dt)
     elseif flag == "attack" then
         levelReader.time = levelReader.time + dt
         levelReader.spawn()
+    end
+
+    if levelReader.alive == 0 and levelReader.enSpawned == levelReader.enCount then
+        love.event.quit()
     end
 end
 
