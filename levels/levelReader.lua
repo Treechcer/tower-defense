@@ -124,8 +124,24 @@ function levelReader.logic(dt)
     end
 
     if levelReader.alive == 0 and levelReader.enSpawned == levelReader.enCount then
-        love.event.quit()
+        levelReader.nextLevel()
     end
+end
+
+function levelReader.nextLevel()
+    game.level = game.level + 1
+    local sucess, result = pcall(levelReader.readLevel, "world" .. game.world .. "/" .. "level" .. game.level)
+
+    if not sucess then
+        game.world = game.world + 1
+        local sucess0, result0 = pcall(levelReader.readLevel, "world" .. game.world .. "/" .. "level" .. game.level)
+
+        if not sucess0 then
+            game.win = true
+        end
+    end
+
+    levelReader.reset()
 end
 
 return levelReader

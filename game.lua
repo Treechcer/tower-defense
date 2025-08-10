@@ -1,11 +1,13 @@
 game = {
     width = love.graphics.getWidth(),
     height = love.graphics.getHeight(),
-    world = "world1",
-    level = "level1",
+    world = 1,
+    level = 1,
     defaults = {
         startMoney = 500
-    }
+    },
+
+    win = false
 }
 
 game.money = game.defaults.startMoney
