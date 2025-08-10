@@ -90,6 +90,11 @@ function map.reset()
         false,
         false,
     }
+
+    map.specialTiles = {}
+    map.specialTilesAbility = {}
+
+    map.generateSpecialTiles()
 end
 
 function map.draw()

@@ -70,6 +70,7 @@ function levelReader.reset()
     levelReader.flagTime = 0.1
     levelReader.percent = 0
     levelReader.enSpawned = 0
+    levelReader.alive = 0
 
     map.reset()
 end
@@ -129,6 +130,7 @@ function levelReader.logic(dt)
 end
 
 function levelReader.nextLevel()
+    levelReader.reset()
     game.level = game.level + 1
     local sucess, result = pcall(levelReader.readLevel, "world" .. game.world .. "/" .. "level" .. game.level)
 
@@ -140,8 +142,6 @@ function levelReader.nextLevel()
             game.win = true
         end
     end
-
-    levelReader.reset()
 end
 
 return levelReader
