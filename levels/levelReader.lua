@@ -8,7 +8,7 @@ levelReader = {
     time = 0,
     index = 1,
     flagNow = "wait",
-    flagTime = 0.1,
+    flagTime = 0,
     percent = 0,
     enSpawned = 0,
     alive = 0,
@@ -30,6 +30,8 @@ function levelReader.readLevel(level)
     levelReader.level = require("levels/" .. level)
 
     levelReader.specialTiles()
+
+    levelReader.flagTime = levelReader.level.metadata.warmupTime or 10
 
     for key, value in pairs(levelReader.level.metadata.disabledLanes) do
         map.disableLane(value)
@@ -67,7 +69,7 @@ function levelReader.reset()
     levelReader.time = 0
     levelReader.index = 1
     levelReader.flagNow = "wait"
-    levelReader.flagTime = 0.1
+    levelReader.flagTime = levelReader.level.metadata.warmupTime
     levelReader.percent = 0
     levelReader.enSpawned = 0
     levelReader.alive = 0
@@ -148,7 +150,12 @@ end
 
 function levelReader.transition(dt)
     if game.levelTransition < 1 then
-        game.levelTransition = game.levelTransition + dt
+        game.levelTransition = game.levelTransition + (dt * 1.5)
+
+        if game.levelTransition > 1 then
+            game.levelTransition = 1
+        end
+
         return false
     else
         return true

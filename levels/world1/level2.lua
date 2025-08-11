@@ -17,7 +17,7 @@ level = {
         disabledLanes = {
         },
         specialTiles = {
-            {x = 3, y = 4, ability = "noPlace"}
+            --{x = 3, y = 4, ability = "noPlace"}
         }
     },
     wave = {

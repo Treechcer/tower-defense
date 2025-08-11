@@ -9,7 +9,7 @@ defenses = {
     },
 
     built = { -- it's table of tables, every table in it has X Y position and other things
-        
+
     },
 
     UIsize = 70,
@@ -45,9 +45,15 @@ function defenses.buyDraw()
         if i + 1 == defenses.selected then
             love.graphics.setColor(1,1,1, game.levelTransition)
         else
-            love.graphics.setColor(0.3,0.5,0.4, game.levelTransition)
+            love.graphics.setColor(0.3,0.3,0.3, game.levelTransition)
         end
+
         love.graphics.rectangle("fill", 5, i * defenses.UIsize + offset, defenses.UIsize, defenses.UIsize)
+
+        local p = defenseValues[defenses.pickedDefenses[i+1]].plantCoolDown / defenses.coolDowns[defenses.pickedDefenses[i+1]]
+        love.graphics.setColor(0.1,0.1,0.1, 0.4)
+        love.graphics.rectangle("fill", 5, i * defenses.UIsize + offset, defenses.UIsize, defenses.UIsize / p)
+
         offset = offset + 5
     end
 end
@@ -62,6 +68,9 @@ end
 function defenses.colldownReset(dt)
     for key, value in pairs(defenses.coolDowns) do
         defenses.coolDowns[key] = value + dt
+        if defenses.coolDowns[key] > defenseValues[key].plantCoolDown then
+            defenses.coolDowns[key] = defenseValues[key].plantCoolDown
+        end
     end
 
     for i = 1, #defenses.built do
