@@ -15,7 +15,6 @@ level = {
             second = {160 / 255, 82 / 255, 45 / 255}
         },
         disabledLanes = {
-            1,2,7,8
         },
         specialTiles = {
             {x = 3, y = 4, ability = "noPlace"}

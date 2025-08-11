@@ -131,6 +131,8 @@ end
 
 function levelReader.nextLevel()
     levelReader.reset()
+    map.generateSpecialTiles()
+
     game.level = game.level + 1
     local sucess, result = pcall(levelReader.readLevel, "world" .. game.world .. "/" .. "level" .. game.level)
 

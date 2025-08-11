@@ -80,7 +80,18 @@ function map.reset()
         true,
     }
 
-    enemyLanes = {
+    map.enemyLanes = {
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+    }
+
+    map.disabledLanes = {
         false,
         false,
         false,
