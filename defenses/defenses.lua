@@ -43,9 +43,9 @@ function defenses.buyDraw()
     local offset = 5 + 80
     for i = 0, #defenses.pickedDefenses - 1 do
         if i + 1 == defenses.selected then
-            love.graphics.setColor(1,1,1)
+            love.graphics.setColor(1,1,1, game.levelTransition)
         else
-            love.graphics.setColor(0.3,0.5,0.4)
+            love.graphics.setColor(0.3,0.5,0.4, game.levelTransition)
         end
         love.graphics.rectangle("fill", 5, i * defenses.UIsize + offset, defenses.UIsize, defenses.UIsize)
         offset = offset + 5
@@ -54,7 +54,7 @@ end
 
 function defenses.draw()
     for key, value in pairs(defenses.built) do
-        love.graphics.setColor(defenseValues[value.defense].sprite)
+        love.graphics.setColor(defenseValues[value.defense].sprite, game.levelTransition)
         love.graphics.rectangle("fill", (value.x - 1) * map.blockSize + map.blockSize * 1.75, (value.y - 1) * map.blockSize, map.blockSize, map.blockSize)
     end
 end

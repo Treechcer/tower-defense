@@ -19,7 +19,7 @@ end
 function projectile.draw()
     for index, value in ipairs(projectile.active) do
         local proj = projectile.active[index]
-        love.graphics.setColor(defenseValues[proj.origin].ammoSprite)
+        love.graphics.setColor(defenseValues[proj.origin].ammoSprite[1], defenseValues[proj.origin].ammoSprite[2], defenseValues[proj.origin].ammoSprite[3], game.levelTransition)
         love.graphics.rectangle("fill", proj.x, proj.y, proj.sizeX, proj.sizeY)
     end
 end

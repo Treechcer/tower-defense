@@ -119,6 +119,8 @@ function map.draw()
             if abilityDo.draw then
                 color = ((x + y) % 2 == 0) and colSec.main or colSec.second
 
+                color = {color[1], color[2], color[3], game.levelTransition}
+
                 love.graphics.setColor(color)
 
                 love.graphics.rectangle("fill", (x - 1) * map.blockSize + map.blockSize * 1.75, (y - 1) * map.blockSize, map.blockSize, map.blockSize) 
@@ -139,6 +141,8 @@ function map.draw()
 
         if map.lawnMowers[y] then
             color = ((y + 1) % 2 == 0) and colSec.main or colSec.second
+
+            color = {color[1], color[2], color[3], game.levelTransition}
 
             love.graphics.setColor(color)
 

@@ -21,17 +21,21 @@ function love.draw()
     projectile.draw()
     levelReader.drawBar()
 
-    love.graphics.setColor(1, 1, 1)
+    love.graphics.setColor(1, 1, 1, game.levelTransition)
     love.graphics.print(game.money, 100, 100)
 end
 
 function love.update(dt)
-    enemy.move(dt)
-    enemy.cooldownAdd(dt)
-    defenses.colldownReset(dt)
-    projectile.move(dt)
-    levelReader.logic(dt)
-    projectile.collisionCheck()
+    game.isRunning = levelReader.transition(dt)
+
+    if game.isRunning then
+        enemy.move(dt)
+        enemy.cooldownAdd(dt)
+        defenses.colldownReset(dt)
+        projectile.move(dt)
+        levelReader.logic(dt)
+        projectile.collisionCheck()
+    end
 
     for i = 1, #defenses.built do
         if defenses.built[i].defense == "generator" then
@@ -52,8 +56,12 @@ function love.mousepressed(x, y, button, isTouch)
             local tileX = math.floor((x - map.blockSize * 1.75) / map.blockSize) + 1
             local tileY = math.floor((y) / map.blockSize) + 1
 
-            local abilities = map.doAbilityOfTile("else")
+            if map.specialTilesAbility[tileY][tileX] == "plant" then
+                return
+            end
 
+            local abilities = map.doAbilityOfTile("else")
+            
             if map.specialTiles[tileY][tileX] then
                 abilities = map.doAbilityOfTile(map.specialTilesAbility[tileY][tileX])
             end
@@ -97,12 +105,12 @@ function love.mousepressed(x, y, button, isTouch)
                 end
 
                 if not exists and bonus == {} then
-                    table.insert(defenses.built,
-                        { x = tileX, y = tileY, defense = defensePicked, hp = defenseValues[defensePicked].hp })
+                    table.insert(defenses.built, { x = tileX, y = tileY, defense = defensePicked, hp = defenseValues[defensePicked].hp })
+                    map.makeSpecialTile({x = tileX, y = tileY, ability = "plant"})
                 elseif not exists then
-                    table.insert(defenses.built,
-                        { x = tileX, y = tileY, defense = defensePicked, hp = defenseValues[defensePicked].hp })
+                    table.insert(defenses.built, { x = tileX, y = tileY, defense = defensePicked, hp = defenseValues[defensePicked].hp })
                     defenses.built[#defenses.built].cooldown = bonus[1]
+                    map.makeSpecialTile({x = tileX, y = tileY, ability = "plant"})
                 end
             end
         end

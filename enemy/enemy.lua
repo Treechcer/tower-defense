@@ -63,7 +63,7 @@ function enemy.die(index, value)
 end
 
 function enemy.draw()
-    love.graphics.setColor(0.4, 0.4, 0.4)
+    love.graphics.setColor(0.4, 0.4, 0.4, game.levelTransition)
     for key, value in pairs(enemy.enemyList) do
         love.graphics.rectangle("fill", game.width - value.x, (value.line - 1) * 75, 75, 75)
     end

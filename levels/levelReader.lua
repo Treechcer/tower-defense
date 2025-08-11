@@ -107,7 +107,7 @@ end
 function levelReader.drawBar()
     love.graphics.rectangle("fill", levelReader.bar.x, levelReader.bar.y, levelReader.bar.width, levelReader.bar.height)
 
-    love.graphics.setColor(1, 0, 0)
+    love.graphics.setColor(1, 0, 0, game.levelTransition)
     love.graphics.rectangle("fill", levelReader.bar.x + levelReader.bar.width, levelReader.bar.y + levelReader.bar.height, - levelReader.bar.width, -(levelReader.bar.height * levelReader.percent))
 end
 
@@ -141,6 +141,15 @@ function levelReader.nextLevel()
         if not sucess0 then
             game.win = true
         end
+    end
+end
+
+function levelReader.transition(dt)
+    if game.levelTransition < 1 then
+        game.levelTransition = game.levelTransition + dt
+        return false
+    else
+        return true
     end
 end
 

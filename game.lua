@@ -7,7 +7,10 @@ game = {
         startMoney = 500
     },
 
-    win = false
+    isRunning = true,
+    levelTransition = 0,
+
+    win = false,
 }
 
 game.money = game.defaults.startMoney
