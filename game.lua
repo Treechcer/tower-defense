@@ -7,12 +7,13 @@ game = {
         startMoney = 500
     },
 
-    isRunning = true,
+    isRunning = true, -- this makes the game pause itself
     levelTransition = 0,
 
     win = false,
 }
 
 game.money = game.defaults.startMoney
+
 
 return game
