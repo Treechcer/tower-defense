@@ -3,7 +3,11 @@ game = require("game")
 map = require("map")
 
 enemy = {
-    enemyList = {} -- this object is table tables that are like : line 1-8 (1 == top line) X (int of pixel), type
+    enemyList = {}, -- this object is table tables that are like : line 1-8 (1 == top line) X (int of pixel), type
+    delaySpawn = 0.1,
+    lastSpawn = 10,
+    isSpawning = false,
+    spawnEnemies = {}, -- this table is for future enemy spawns
 }
 
 function enemy.move(dt)
@@ -94,6 +98,21 @@ end
 
 function enemy.kiullAll()
     enemy.enemyList = {}
+end
+
+function enemy.delaySpawner(dt)
+    if #enemy.spawnEnemies ~= 0 then
+        if enemy.lastSpawn >= enemy.delaySpawn then
+            enemy.Create(enemy.spawnEnemies[1].line, enemy.spawnEnemies[1].xPos, enemy.spawnEnemies[1].enemyType)
+            enemy.lastSpawn = 0
+            table.remove(enemy.spawnEnemies, 1)
+
+            levelReader.enSpawned = levelReader.enSpawned + 1
+            levelReader.alive = levelReader.alive + 1
+        else
+            enemy.lastSpawn = enemy.lastSpawn + dt
+        end
+    end
 end
 
 --enemy.Create(1, 50, enemyValues.default.type)

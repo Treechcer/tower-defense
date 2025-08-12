@@ -35,6 +35,8 @@ function love.update(dt)
         projectile.move(dt)
         levelReader.logic(dt)
         projectile.collisionCheck()
+
+        enemy.delaySpawner(dt)
     end
 
     for i = 1, #defenses.built do

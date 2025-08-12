@@ -33,6 +33,8 @@ function levelReader.readLevel(level)
 
     levelReader.flagTime = levelReader.level.metadata.warmupTime or 10
 
+    enemy.delaySpawn = levelReader.level.metadata.delay or 0.2
+
     for key, value in pairs(levelReader.level.metadata.disabledLanes) do
         map.disableLane(value)
     end
@@ -85,11 +87,13 @@ function levelReader.spawn()
     if levelReader.level.wave[levelReader.index].time <= levelReader.time then
         for key, value in pairs(levelReader.level.wave[levelReader.index].enemies) do
             --print(value.line, value.type)
-            local tempBool = enemy.Create(value.line, 0, value.type)
-            if tempBool then
-                levelReader.enSpawned = levelReader.enSpawned + 1
-                levelReader.alive = levelReader.alive + 1
-            end
+            --local tempBool = enemy.Create(value.line, 0, value.type)
+            --if tempBool then
+            --    levelReader.enSpawned = levelReader.enSpawned + 1
+            --    levelReader.alive = levelReader.alive + 1
+            --end
+
+            table.insert(enemy.spawnEnemies, {line = value.line, xPos = 0, enemyType = value.type})
         end
 
         levelReader.percent = levelReader.enSpawned / levelReader.enCount

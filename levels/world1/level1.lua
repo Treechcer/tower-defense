@@ -22,6 +22,7 @@ level = {
         },
 
         warmupTime = 10,
+        delay = 0.1
     },
     wave = {
         {
@@ -29,6 +30,7 @@ level = {
             flag = "attack",
             enemies = {
                 {line = 5, type = "default"},
+                --{line = 4, type = "default"},
                 --{line = 2, type = "default"},
                 --{line = 4, type = "default"}
             },
