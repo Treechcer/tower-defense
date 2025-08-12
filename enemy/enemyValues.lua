@@ -1,3 +1,5 @@
+-- in this file are all enemy types and values associated with them
+
 enemyValues = {
     default = {
         speed = 100,
@@ -8,5 +10,6 @@ enemyValues = {
         attackCooldown = 0.5,
     }
 }
+
 
 return enemyValues
