@@ -10,6 +10,8 @@ function love.load()
     defenseValues = require("defenses.defenseValues")
     enemy = require("enemy.enemy")
 
+    -- funcitons to init values and needed things
+
     defenses.init()
 end
 
