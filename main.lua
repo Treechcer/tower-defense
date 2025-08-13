@@ -84,18 +84,22 @@ function love.mousepressed(x, y, button, isTouch)
                 defenses.coolDowns[defensePicked] = 0
 
                 table.insert(bonus, 0)
-            elseif defensePicked == "shooter" and game.money >= defValuesPickedDefense.cost and isCooledDown then
+                
+            --elseif defensePicked == "shooter" and game.money >= defValuesPickedDefense.cost and isCooledDown then
+            --    game.money = game.money - defValuesPickedDefense.cost
+            --    defValuesPickedDefense.count = defValuesPickedDefense.count + 1
+            --    canPlace = true
+            --    defenses.coolDowns[defensePicked] = 0
+            --
+            --    table.insert(bonus, 0)
+
+            elseif game.money >= defValuesPickedDefense.cost and isCooledDown then
                 game.money = game.money - defValuesPickedDefense.cost
                 defValuesPickedDefense.count = defValuesPickedDefense.count + 1
                 canPlace = true
                 defenses.coolDowns[defensePicked] = 0
 
                 table.insert(bonus, 0)
-            elseif game.money >= defValuesPickedDefense.cost and isCooledDown then
-                game.money = game.money - defValuesPickedDefense.cost
-                defValuesPickedDefense.count = defValuesPickedDefense.count + 1
-                canPlace = true
-                defenses.coolDowns[defensePicked] = 0
             end
 
             if canPlace then

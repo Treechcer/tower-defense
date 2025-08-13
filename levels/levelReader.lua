@@ -84,6 +84,10 @@ function levelReader.spawn()
         return
     end
 
+    if levelReader.level.wave[levelReader.index].delay ~= nil then
+        enemy.delaySpawn = levelReader.level.wave[levelReader.index].delay
+    end
+
     if levelReader.level.wave[levelReader.index].time <= levelReader.time then
         for key, value in pairs(levelReader.level.wave[levelReader.index].enemies) do
             --print(value.line, value.type)
