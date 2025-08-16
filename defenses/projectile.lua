@@ -6,7 +6,14 @@ projectile = {
 }
 
 function projectile.create(x, y, speed, sprite, damage, sizeX, sizeY, origin)
-    table.insert(projectile.active, {x = x, y = y, speed = speed, sprite = sprite, damage = damage, sizeX = sizeX, sizeY = sizeY, origin = origin})
+
+    if defenseValues[origin].projSpeciality ~= nil then
+        speciality = defenseValues[origin].projSpeciality
+    else
+        speciality = nil
+    end
+
+    table.insert(projectile.active, {x = x, y = y, speed = speed, sprite = sprite, damage = damage, sizeX = sizeX, sizeY = sizeY, origin = origin, speciality = speciality})
 end
 
 function projectile.move(dt)
@@ -34,6 +41,11 @@ function projectile.collisionCheck()
             local enWidth = map.blockSize
             local enHeight = map.blockSize
             if proj.x < enX + enWidth and proj.x + proj.sizeX > enX and proj.y < enY + enHeight and proj.y + proj.sizeY > enY then
+                
+                if proj.speciality ~= nil then
+                    en = _G.projectile[proj.speciality.name](en, proj)
+                end
+
                 en.health = en.health - proj.damage
                 table.remove(projectile.active, i)
 
@@ -43,6 +55,17 @@ function projectile.collisionCheck()
             end
         end
     end
+end
+
+function projectile.slow(en, proj)
+    if not en.isSlowed then
+        en.speed = en.speed - (en.speed * (proj.speciality.effect / 100))
+        en.timeToSlow = proj.speciality.effectTime
+        en.isSlowed = true
+        en.sprite = enemyValues[en.type].freezeColor
+    end
+
+    return en
 end
 
 function projectile.reset()

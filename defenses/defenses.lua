@@ -5,7 +5,8 @@ defenses = {
     pickedDefenses = {
         "shooter",
         "generator",
-        "tank"
+        "tank",
+        "iceShooter"
     },
 
     built = { -- it's table of tables, every table in it has X Y position and other things

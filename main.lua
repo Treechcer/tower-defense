@@ -42,11 +42,13 @@ function love.update(dt)
     end
 
     for i = 1, #defenses.built do
-        if defenses.built[i].defense == "generator" then
+        if defenseValues[defenses.built[i].defense].type == "generator" then
             defenseValues.generator.generate(defenses.built[i])
-        elseif defenses.built[i].defense == "shooter" then
+        elseif defenseValues[defenses.built[i].defense].type == "shooter" then
             defenseValues.shooter.shoot(defenses.built[i])
         end
+
+        --print(defenseValues[defenses.built[i].defense].type)
     end
 end
 
@@ -61,7 +63,18 @@ function love.mousepressed(x, y, button, isTouch)
             local tileY = math.floor((y) / map.blockSize) + 1
 
             if map.specialTilesAbility[tileY][tileX] == "plant" then
-                return
+                print("TEAS")
+
+                for index, value in ipairs(defenses.built) do
+                    if value.x == tileX and value.y == tileY then
+                        game.money = game.money + math.floor((defenseValues[value.defense].cost / 3) * 2)
+
+                        table.remove(defenses.built, index)
+                        break
+                    end
+                end
+                
+                map.specialTilesAbility[tileY][tileX] = nil
             end
 
             local abilities = map.doAbilityOfTile("else")

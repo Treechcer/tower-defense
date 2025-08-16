@@ -13,18 +13,37 @@ defenseValues = {
     -- temporary sprites are colors
 
     shooter = {
+        type = "shooter",
         sprite = {0,1,1},
         ammoSprite = {1,1,1},
         cost = 125,
         plantCoolDown = 12,
         hp = 100,
+        damage = 12.5,
+        projSpeciality = nil,
 
         shootCoolDown = 0.5,
 
         count = 0, -- this is how many of there are spawned
     },
 
+    iceShooter = {
+        type = "shooter",
+        sprite = {0.3,0.6,0.9},
+        ammoSprite = {0.8,0.8,1},
+        cost = 175,
+        plantCoolDown = 12,
+        hp = 100,
+        damage = 7.5,
+        projSpeciality = {name = "slow", effect = 30, effectTime = 3},
+
+        shootCoolDown = 0.7,
+
+        count = 0,
+    },
+
     generator = {
+        type = "generator",
         sprite = {0,0,1},
         cost = 50,
         plantCoolDown = 7,
@@ -37,6 +56,7 @@ defenseValues = {
     },
 
     tank = {
+        type = "tank",
         sprite = {1,0,1},
         cost = 25,
         plantCoolDown = 7,
@@ -73,8 +93,10 @@ function defenseValues.shooter.shoot(shooter)
     end
 
     if map.enemyLanes[shooter.y] and shooter.cooldown >= defenseValues[shooter.defense].shootCoolDown and shoot then
-        projectile.create(((shooter.x - 1) * map.blockSize) + (map.blockSize * 1.75 + map.blockSize / 3), ((shooter.y - 1) * map.blockSize) + (map.blockSize / 3), 100, {0,1,1}, 10, 25, 25, shooter.defense)
+        projectile.create(((shooter.x - 1) * map.blockSize) + (map.blockSize * 1.75 + map.blockSize / 3), ((shooter.y - 1) * map.blockSize) + (map.blockSize / 3), 100, {0,1,1}, defenseValues[shooter.defense].damage, 25, 25, shooter.defense)
         shooter.cooldown = 0
+
+        --print(defenseValues[shooter.defense].damage)
     end
 end
 

@@ -21,7 +21,7 @@ level = {
             --{x = 4, y = 4, ability = "noPlace"}
         },
 
-        warmupTime = 10,
+        warmupTime = 1,
         delay = 0.1
     },
     wave = {

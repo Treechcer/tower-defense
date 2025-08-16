@@ -27,7 +27,8 @@ function enemy.move(dt)
         end
 
         if not hit then
-            value.x = value.x + enemyValues[value.type].speed * dt
+            --print(value.speed)
+            value.x = value.x + value.speed * dt
         end
 
         if value.x >= game.width - (-1 * map.blockSize + map.blockSize * 1.75 + map.blockSize/2) and map.lawnMowers[value.line] then
@@ -67,8 +68,8 @@ function enemy.die(index, value)
 end
 
 function enemy.draw()
-    love.graphics.setColor(0.4, 0.4, 0.4, game.levelTransition)
     for key, value in pairs(enemy.enemyList) do
+        love.graphics.setColor(value.sprite[1], value.sprite[2], value.sprite[3], game.levelTransition)
         love.graphics.rectangle("fill", game.width - value.x, (value.line - 1) * 75, 75, 75)
     end
 end
@@ -76,12 +77,23 @@ end
 function enemy.cooldownAdd(dt)
     for key, value in pairs(enemy.enemyList) do
         value.lastAttack = value.lastAttack + dt
+        if value.isSlowed then
+            if value.timeSlowed >= value.timeToSlow then
+                value.isSlowed = false
+                value.timeToSlow = 0
+                value.timeSlowed = 0
+                value.speed = enemyValues[value.type].speed
+                value.sprite = enemyValues[value.type].color
+            end
+
+            value.timeSlowed = value.timeSlowed + dt
+        end
     end
 end
 
 function enemy.Create(lineNum, xPos, enemyType)
     if not map.disabledLanes[lineNum] and (lineNum >= 1 and lineNum <= 8) then
-        table.insert(enemy.enemyList, {line = lineNum, x = xPos, type = enemyType, health = enemyValues[enemyType].health, damage = enemyValues[enemyType].damage, attackCooldown = enemyValues[enemyType].attackCooldown, lastAttack = 0})
+        table.insert(enemy.enemyList, {line = lineNum, x = xPos, type = enemyType, health = enemyValues[enemyType].health, damage = enemyValues[enemyType].damage, attackCooldown = enemyValues[enemyType].attackCooldown, lastAttack = 0, speed = enemyValues[enemyType].speed, isSlowed = false, timeSlowed = 0, timeToSlow = 0, sprite = enemyValues[enemyType].color})
         map.enemyLanes[lineNum] = true
 
         enemy.sortEnemyByLine()
