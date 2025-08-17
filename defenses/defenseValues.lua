@@ -21,6 +21,7 @@ defenseValues = {
         hp = 100,
         damage = 12.5,
         projSpeciality = nil,
+        projectileSpeed = 160,
 
         shootCoolDown = 0.5,
 
@@ -35,9 +36,26 @@ defenseValues = {
         plantCoolDown = 12,
         hp = 100,
         damage = 7.5,
-        projSpeciality = {name = "slow", effect = 30, effectTime = 3},
+        projSpeciality = {name = "slow", effect = 30, effectTime = 3, type = "watter"},
+        projectileSpeed = 120,
 
         shootCoolDown = 0.7,
+
+        count = 0,
+    },
+
+    fireShooter = {
+        type = "shooter",
+        sprite = {0.3,0.6,0.9},
+        ammoSprite = {0.8,0.8,1},
+        cost = 175,
+        plantCoolDown = 12,
+        hp = 100,
+        damage = 6,
+        projSpeciality = {name = "dot", effect = 15, effectTime = 1.5, type = "fire"},
+        projectileSpeed = 100,
+
+        shootCoolDown = 0.6,
 
         count = 0,
     },
@@ -93,7 +111,7 @@ function defenseValues.shooter.shoot(shooter)
     end
 
     if map.enemyLanes[shooter.y] and shooter.cooldown >= defenseValues[shooter.defense].shootCoolDown and shoot then
-        projectile.create(((shooter.x - 1) * map.blockSize) + (map.blockSize * 1.75 + map.blockSize / 3), ((shooter.y - 1) * map.blockSize) + (map.blockSize / 3), 100, {0,1,1}, defenseValues[shooter.defense].damage, 25, 25, shooter.defense)
+        projectile.create(((shooter.x - 1) * map.blockSize) + (map.blockSize * 1.75 + map.blockSize / 3), ((shooter.y - 1) * map.blockSize) + (map.blockSize / 3), defenseValues[shooter.defense].projectileSpeed, {0,1,1}, defenseValues[shooter.defense].damage, 25, 25, shooter.defense)
         shooter.cooldown = 0
 
         --print(defenseValues[shooter.defense].damage)

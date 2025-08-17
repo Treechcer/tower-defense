@@ -6,7 +6,8 @@ defenses = {
         "shooter",
         "generator",
         "tank",
-        "iceShooter"
+        "iceShooter",
+        "fireShooter"
     },
 
     built = { -- it's table of tables, every table in it has X Y position and other things

@@ -1,5 +1,6 @@
 local enemy = require("enemy.enemy")
 local map = require("map")
+local specialEffects = require("defenses.specialEffects")
 
 projectile = {
     active = {}
@@ -58,12 +59,58 @@ function projectile.collisionCheck()
 end
 
 function projectile.slow(en, proj)
+    if en.isObsidian then
+        return en
+    end
+    
+    if en.isSlowed and en.onDot and not en.isObsidian then
+        en = projectile.obsidian(en, proj)
+        return en
+    end
+
     if not en.isSlowed then
         en.speed = en.speed - (en.speed * (proj.speciality.effect / 100))
         en.timeToSlow = proj.speciality.effectTime
         en.isSlowed = true
         en.sprite = enemyValues[en.type].freezeColor
     end
+
+    return en
+end
+
+function projectile.dot(en, proj)
+    if en.isObsidian then
+        return en
+    end
+
+    if en.isSlowed and en.onDot and not en.isObsidian then
+        en = projectile.obsidian(en, proj)
+        return en
+    end
+
+    if not en.onDot then
+        en.timeToDot = proj.speciality.effectTime
+        en.onDot = true
+        en.dotDamage = proj.speciality.effect
+        en.sprite = enemyValues[en.type][proj.speciality.type .. "Color"]
+    end
+
+    return en
+end
+
+function projectile.obsidian(en, proj)
+    en.isSlowed = false
+    en.timeToSlow = 0
+    en.timeSlowed = 0
+    en.onDot = false
+    en.timeToDot = 0
+    en.timeInDot = 0
+
+    en.isObsidian = true
+    en.timeToObsidian = specialEffects.obsidian.time
+    en.dotDamage = specialEffects.obsidian.dotDamage
+    en.speed = en.speed - (en.speed * (specialEffects.obsidian.speedDebuff / 100))
+    en.sprite = enemyValues[en.type].obsidianColor
 
     return en
 end

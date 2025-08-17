@@ -75,9 +75,23 @@ function enemy.draw()
 end
 
 function enemy.cooldownAdd(dt)
+    local index = 1
     for key, value in pairs(enemy.enemyList) do
         value.lastAttack = value.lastAttack + dt
-        if value.isSlowed then
+
+        if value.isObsidian then
+            if value.timeObsidian >= value.timeToObsidian then
+                value.isObsidian = false
+                value.timeToObsidian = 0
+                value.timeObsidian = 0
+                value.speed = enemyValues[value.type].speed
+                value.sprite = enemyValues[value.type].color
+            end
+
+            value.health = value.health - (value.dotDamage * dt)
+
+            value.timeObsidian = value.timeObsidian + dt
+        elseif value.isSlowed then
             if value.timeSlowed >= value.timeToSlow then
                 value.isSlowed = false
                 value.timeToSlow = 0
@@ -87,13 +101,37 @@ function enemy.cooldownAdd(dt)
             end
 
             value.timeSlowed = value.timeSlowed + dt
+        
+        elseif value.onDot then
+            if value.timeInDot >= value.timeToDot then
+                value.onDot = false
+                value.timeToDot = 0
+                value.timeInDot = 0
+                value.sprite = enemyValues[value.type].color
+            end
+
+            value.health = value.health - (value.dotDamage * dt)
+
+            if value.health < 0 then
+                enemy.die(index, value)
+            end
+
+            value.timeInDot = value.timeInDot + dt
         end
+
+        index = index + 1
     end
 end
 
 function enemy.Create(lineNum, xPos, enemyType)
     if not map.disabledLanes[lineNum] and (lineNum >= 1 and lineNum <= 8) then
-        table.insert(enemy.enemyList, {line = lineNum, x = xPos, type = enemyType, health = enemyValues[enemyType].health, damage = enemyValues[enemyType].damage, attackCooldown = enemyValues[enemyType].attackCooldown, lastAttack = 0, speed = enemyValues[enemyType].speed, isSlowed = false, timeSlowed = 0, timeToSlow = 0, sprite = enemyValues[enemyType].color})
+        table.insert(enemy.enemyList, {sprite = enemyValues[enemyType].color, line = lineNum, x = xPos, type = enemyType, health = enemyValues[enemyType].health, damage = enemyValues[enemyType].damage, attackCooldown = enemyValues[enemyType].attackCooldown, lastAttack = 0, speed = enemyValues[enemyType].speed, 
+            isSlowed = false,   timeSlowed = 0,     timeToSlow = 0, -- This is for slowing
+            onDot = false,      timeToDot = 0,      timeInDot = 0, dotDamage = 0, -- this is for DOT
+            isObsidian = false, timeToObsidian = 0, timeObsidian = 0, -- this is for obsidian effect
+            
+        })
+        
         map.enemyLanes[lineNum] = true
 
         enemy.sortEnemyByLine()
