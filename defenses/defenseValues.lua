@@ -46,8 +46,8 @@ defenseValues = {
 
     fireShooter = {
         type = "shooter",
-        sprite = {0.3,0.6,0.9},
-        ammoSprite = {0.8,0.8,1},
+        sprite = {0.8,0.2,0.4},
+        ammoSprite = {0.9,0.3,0.4},
         cost = 175,
         plantCoolDown = 12,
         hp = 100,
