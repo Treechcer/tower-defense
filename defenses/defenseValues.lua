@@ -21,7 +21,7 @@ defenseValues = {
         hp = 100,
         damage = 12.5,
         projSpeciality = nil,
-        projectileSpeed = 160,
+        projectileSpeed = 350,
 
         shootCoolDown = 0.5,
 
@@ -36,8 +36,8 @@ defenseValues = {
         plantCoolDown = 12,
         hp = 100,
         damage = 7.5,
-        projSpeciality = {name = "slow", effect = 30, effectTime = 3, type = "watter"},
-        projectileSpeed = 120,
+        projSpeciality = {name = "slow", effect = 40, effectTime = 3, type = "watter"},
+        projectileSpeed = 275,
 
         shootCoolDown = 0.7,
 
@@ -53,7 +53,7 @@ defenseValues = {
         hp = 100,
         damage = 6,
         projSpeciality = {name = "dot", effect = 15, effectTime = 1.5, type = "fire"},
-        projectileSpeed = 100,
+        projectileSpeed = 250,
 
         shootCoolDown = 0.6,
 

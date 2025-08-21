@@ -59,12 +59,12 @@ function projectile.collisionCheck()
 end
 
 function projectile.slow(en, proj)
-    if en.isObsidian then
-        return en
-    end
-    
     if en.isSlowed and en.onDot and not en.isObsidian then
         en = projectile.obsidian(en, proj)
+        return en
+    end
+
+    if en.isObsidian then
         return en
     end
 
@@ -79,12 +79,12 @@ function projectile.slow(en, proj)
 end
 
 function projectile.dot(en, proj)
-    if en.isObsidian then
+    if en.isSlowed and en.onDot and not en.isObsidian then
+        en = projectile.obsidian(en, proj)
         return en
     end
 
-    if en.isSlowed and en.onDot and not en.isObsidian then
-        en = projectile.obsidian(en, proj)
+    if en.isObsidian then
         return en
     end
 

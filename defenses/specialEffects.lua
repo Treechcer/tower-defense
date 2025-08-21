@@ -1,7 +1,7 @@
 specialEffects = {
     obsidian = {
         time = 5,
-        speedDebuff = 45,
+        speedDebuff = 50,
         dotDamage = 30
     }
 }
