@@ -76,11 +76,11 @@ function defenses.colldownReset(dt)
     end
 
     for i = 1, #defenses.built do
-        if defenses.built[i].defense == "generator" then
-            if defenses.built[i].cooldown == nil then
-                defenses.built[i].cooldown = 0
-            end
+        if defenses.built[i].cooldown == nil then
+            defenses.built[i].cooldown = 0
+        end
 
+        if defenses.built[i].defense == "generator" then
             --for key, value in pairs(defenses.built[i]) do
             --    print(i, key, " : ", value)
             --end

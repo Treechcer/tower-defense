@@ -146,7 +146,7 @@ function enemy.sortEnemyByLine()
     table.sort(enemy.enemyList, function(a, b) return a.line < b.line end)
 end
 
-function enemy.kiullAll()
+function enemy.killAll()
     enemy.enemyList = {}
 end
 

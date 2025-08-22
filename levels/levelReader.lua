@@ -63,7 +63,7 @@ function levelReader.specialTiles()
 end
 
 function levelReader.reset()
-    enemy.kiullAll()
+    enemy.killAll()
     projectile.reset()
     defenses.reset()
 
