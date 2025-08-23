@@ -14,71 +14,71 @@ defenseValues = {
 
     shooter = {
         type = "shooter",
-        sprite = {0,1,1},
-        ammoSprite = {1,1,1},
-        cost = 125,
+        sprite = {0.2, 0.8, 0.2},
+        ammoSprite = {0.9, 1.0, 0.9},
+        cost = 100,
         plantCoolDown = 12,
         hp = 100,
         damage = 12.5,
         projSpeciality = nil,
-        projectileSpeed = 350,
+        projectileSpeed = 325,
 
-        shootCoolDown = 0.5,
+        shootCoolDown = 0.6,
 
         count = 0, -- this is how many of there are spawned
     },
 
     iceShooter = {
         type = "shooter",
-        sprite = {0.3,0.6,0.9},
-        ammoSprite = {0.8,0.8,1},
+        sprite = {0.3, 0.7, 1.0},
+        ammoSprite = {0.7, 0.9, 1.0},
         cost = 175,
         plantCoolDown = 12,
         hp = 100,
-        damage = 7.5,
-        projSpeciality = {name = "slow", effect = 40, effectTime = 3, type = "watter"},
+        damage = 6.5,
+        projSpeciality = {name = "slow", effect = 40, effectTime = 2.5, type = "watter"},
         projectileSpeed = 275,
 
-        shootCoolDown = 0.7,
+        shootCoolDown = 0.8,
 
         count = 0,
     },
 
     fireShooter = {
         type = "shooter",
-        sprite = {0.8,0.2,0.4},
-        ammoSprite = {0.9,0.3,0.4},
+        sprite = {0.9, 0.3, 0.1},
+        ammoSprite ={1.0, 0.7, 0.2},
         cost = 175,
         plantCoolDown = 12,
         hp = 100,
-        damage = 6,
+        damage = 5,
         projSpeciality = {name = "dot", effect = 15, effectTime = 1.5, type = "fire"},
         projectileSpeed = 250,
 
-        shootCoolDown = 0.6,
+        shootCoolDown = 0.7,
 
         count = 0,
     },
 
     generator = {
         type = "generator",
-        sprite = {0,0,1},
-        cost = 50,
+        sprite = {1.0, 0.9, 0.2},
+        cost = 85,
         plantCoolDown = 7,
-        hp = 70,
+        hp = 60,
 
         count = 0,
 
-        generatorCoolDownRange = {5,10},
+        generatorCoolDownRange = {5,8},
         generatorCoolDown = 0
     },
 
     tank = {
         type = "tank",
-        sprite = {1,0,1},
-        cost = 25,
-        plantCoolDown = 7,
-        hp = 200,
+        sprite = {0.4, 0.2, 0.6},
+        cost = 75,
+        plantCoolDown = 9,
+        hp = 250,
 
         count = 0
     }

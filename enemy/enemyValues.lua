@@ -2,15 +2,27 @@
 
 enemyValues = {
     default = {
-        speed = 100,
-        health = 100,
-        color = {130/255, 54/255, 14/255},
-        freezeColor = {130/255, 54/255, 125/255},
-        fireColor = {210/255, 54/255, 14/255},
-        obsidianColor = {130/255/2, 54/255/2, 14/255/2},
+        speed = 90,
+        health = 120,
+        color = {0.7, 0.2, 0.2},
+        freezeColor = {0.4, 0.6, 1.0},
+        fireColor = {1.0, 0.4, 0.1},
+        obsidianColor = {0.2, 0.1, 0.3},
         type = "default",
         damage = 15,
-        attackCooldown = 0.5,
+        attackCooldown = 0.6,
+    },
+
+    tank = {
+        speed = 70,
+        health = 300,
+        color = {0.3, 0.1, 0.3},
+        freezeColor = {0.4, 0.6, 1.0},
+        fireColor = {1.0, 0.3, 0.0},
+        obsidianColor = {0.15, 0.15, 0.2},
+        type = "tank",
+        damage = 10,
+        attackCooldown = 0.7,
     }
 }
 
