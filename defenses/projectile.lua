@@ -6,7 +6,7 @@ projectile = {
     active = {}
 }
 
-function projectile.create(x, y, speed, sprite, damage, sizeX, sizeY, origin)
+function projectile.create(x, y, speed, sprite, damage, sizeX, sizeY, origin, isPlant, pierce)
 
     if defenseValues[origin].projSpeciality ~= nil then
         speciality = defenseValues[origin].projSpeciality
@@ -14,7 +14,7 @@ function projectile.create(x, y, speed, sprite, damage, sizeX, sizeY, origin)
         speciality = nil
     end
 
-    table.insert(projectile.active, {x = x, y = y, speed = speed, sprite = sprite, damage = damage, sizeX = sizeX, sizeY = sizeY, origin = origin, speciality = speciality})
+    table.insert(projectile.active, {x = x, y = y, speed = speed, sprite = sprite, damage = damage, sizeX = sizeX, sizeY = sizeY, origin = origin, speciality = speciality, isPlant = isPlant, pierce = pierce})
 end
 
 function projectile.move(dt)
@@ -35,23 +35,59 @@ end
 function projectile.collisionCheck()
     for i = #projectile.active, 1, -1 do
         local proj = projectile.active[i]
-        for j = #enemy.enemyList, 1, -1 do
-            local en = enemy.enemyList[j]
-            local enX = game.width - en.x
-            local enY = (en.line - 1) * map.blockSize
-            local enWidth = map.blockSize
-            local enHeight = map.blockSize
-            if proj.x < enX + enWidth and proj.x + proj.sizeX > enX and proj.y < enY + enHeight and proj.y + proj.sizeY > enY then
-                
-                if proj.speciality ~= nil then
-                    en = _G.projectile[proj.speciality.name](en, proj)
+        if proj.isPlant then
+            for j = #enemy.enemyList, 1, -1 do
+                local en = enemy.enemyList[j]
+                local enX = game.width - en.x
+                local enY = (en.line - 1) * map.blockSize
+                local enWidth = map.blockSize
+                local enHeight = map.blockSize
+                if proj.x < enX + enWidth and proj.x + proj.sizeX > enX and proj.y < enY + enHeight and proj.y + proj.sizeY > enY then
+                    
+                    if proj.speciality ~= nil then
+                        en = _G.projectile[proj.speciality.name](en, proj)
+                    end
+
+                    en.health = en.health - proj.damage
+                    proj.pierce = proj.pierce - 1
+
+                    if proj.pierce == 0 then
+                        table.remove(projectile.active, i)
+                    end
+
+                    if en.health <= 0 then
+                        enemy.die(j, en)
+                    end
+                end
+            end
+        else
+            for j = #defenses.built, 1, -1 do
+                local en = defenses.built[j]
+                local canDo = true
+
+                if proj.lastHit ~= nil then
+                    if en.x == proj.lastHit.x and en.y == proj.lastHit.y then
+                        canDo = false
+                    end
                 end
 
-                en.health = en.health - proj.damage
-                table.remove(projectile.active, i)
+                local enX = (en.x + 0.4) * map.blockSize
+                local enY = (en.y - 1) * map.blockSize
+                local enWidth = map.blockSize
+                local enHeight = map.blockSize
+                if proj.x < enX + enWidth and proj.x + proj.sizeX > enX and proj.y < enY + enHeight and proj.y + proj.sizeY > enY and canDo then
+                    en.hp = en.hp - proj.damage
+                    proj.pierce = proj.pierce - 1
 
-                if en.health <= 0 then
-                    enemy.die(j, en)
+                    if proj.pierce == 0 then
+                        table.remove(projectile.active, i)
+                    else
+                        projectile.active[i].lastHit = {x = en.x, y = en.y}
+                    end
+
+                    if en.hp <= 0 then
+                        defenses.die(j)
+                    end
                 end
             end
         end

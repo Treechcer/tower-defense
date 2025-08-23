@@ -15,12 +15,20 @@ function enemy.move(dt)
     for key, value in pairs(enemy.enemyList) do
         local hit = false
         for key0, value0 in pairs(defenses.built) do
-            -- print(value.lastAttack, value.lastAttack)
             local posCheck = (game.width - value.x) >= (value0.x * map.blockSize)  and (game.width - value.x - 55) <= ((value0.x + 1) * map.blockSize) and value0.y == value.line -- I have no idea why '-55' works, I just tried '-50' and it worked well enough... I'll not investigate further eventho I have guesses
-            if value.lastAttack >= value.attackCooldown and posCheck then
+            if value.lastAttack >= value.attackCooldown and posCheck and value.type ~= "shooter" then
                 defenses.damagePlant(key0, value.damage)
                 hit = true
                 value.lastAttack = 0
+            elseif enemyValues[value.type].atcType == "range" then
+                local canShoot = (game.width - value.x) >= (value0.x * map.blockSize) and (game.width - value.x - 55) <= ((value0.x + enemyValues[value.type].range) * map.blockSize) and value0.y == value.line
+                if value.lastAttack >= value.attackCooldown and canShoot then
+                    projectile.create((game.width - value.x + (75 / 2)), value.line * 65, -200, {1,1,1}, value.damage, 10, 10, value.type, false, enemyValues[value.type].pierce)
+                    hit = true
+                    value.lastAttack = 0
+                elseif canShoot then
+                    hit = true
+                end
             elseif posCheck then
                 hit = true
             end

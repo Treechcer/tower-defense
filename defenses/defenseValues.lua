@@ -22,6 +22,7 @@ defenseValues = {
         damage = 12.5,
         projSpeciality = nil,
         projectileSpeed = 325,
+        pierce = 1,
 
         shootCoolDown = 0.6,
 
@@ -38,6 +39,7 @@ defenseValues = {
         damage = 6.5,
         projSpeciality = {name = "slow", effect = 40, effectTime = 2.5, type = "watter"},
         projectileSpeed = 275,
+        pierce = 1,
 
         shootCoolDown = 0.8,
 
@@ -54,6 +56,7 @@ defenseValues = {
         damage = 5,
         projSpeciality = {name = "dot", effect = 15, effectTime = 1.5, type = "fire"},
         projectileSpeed = 250,
+        pierce = 1,
 
         shootCoolDown = 0.7,
 
@@ -111,7 +114,7 @@ function defenseValues.shooter.shoot(shooter)
     end
 
     if map.enemyLanes[shooter.y] and shooter.cooldown >= defenseValues[shooter.defense].shootCoolDown and shoot then
-        projectile.create(((shooter.x - 1) * map.blockSize) + (map.blockSize * 1.75 + map.blockSize / 3), ((shooter.y - 1) * map.blockSize) + (map.blockSize / 3), defenseValues[shooter.defense].projectileSpeed, {0,1,1}, defenseValues[shooter.defense].damage, 25, 25, shooter.defense)
+        projectile.create(((shooter.x - 1) * map.blockSize) + (map.blockSize * 1.75 + map.blockSize / 3), ((shooter.y - 1) * map.blockSize) + (map.blockSize / 3), defenseValues[shooter.defense].projectileSpeed, {0,1,1}, defenseValues[shooter.defense].damage, 25, 25, shooter.defense, true, shooter.pierce)
         shooter.cooldown = 0
 
         --print(defenseValues[shooter.defense].damage)

@@ -67,6 +67,12 @@ function defenses.draw()
     end
 end
 
+function defenses.die(index)
+    map.specialTilesAbility[defenses.built[index].x][defenses.built[index].y] = nil
+
+    table.remove(defenses.built, index)
+end
+
 function defenses.colldownReset(dt)
     for key, value in pairs(defenses.coolDowns) do
         defenses.coolDowns[key] = value + dt

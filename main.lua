@@ -63,8 +63,6 @@ function love.mousepressed(x, y, button, isTouch)
             local tileY = math.floor((y) / map.blockSize) + 1
 
             if map.specialTilesAbility[tileY][tileX] == "plant" then
-                print("TEAS")
-
                 for index, value in ipairs(defenses.built) do
                     if value.x == tileX and value.y == tileY then
                         game.money = game.money + math.floor((defenseValues[value.defense].cost / 3) * 2)
