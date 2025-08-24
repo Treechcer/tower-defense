@@ -1,6 +1,7 @@
 enemyValues = require("enemy.enemyValues")
 game = require("game")
 map = require("map")
+debug = require("myDebug")
 
 enemy = {
     enemyList = {}, -- this object is table tables that are like : line 1-8 (1 == top line) X (int of pixel), type
@@ -36,6 +37,35 @@ function enemy.move(dt)
 
         if not hit then
             --print(value.speed)
+
+            tileX = math.floor(((game.width - value.x) - map.blockSize * 1.75) / map.blockSize) + 1
+
+            if map.specialTiles[value.line][tileX] then
+                if map.specialTilesAbility[value.line][tileX] == "slow" then
+                    local add = true
+                    for key0, value0 in pairs(value.specialEffects) do
+                        if value0.type == "slow" and value0.origin == "tile" then
+                            add = false
+                            break
+                        end
+                    end
+
+                    if add then
+                        table.insert(value.specialEffects, {type = "slow", origin = "tile"})
+                        myDebug.out(map.specialTilesEffect)
+                        value.speed = value.speed * (map.specialTilesEffect[value.line][tileX] / 100)
+                    end
+                end
+            end
+
+            for i = #value.specialEffects, 1, -1 do
+                local effect = value.specialEffects[i]
+                if effect.type ~= map.specialTilesAbility[value.line][tileX] and effect.origin == "tile" then
+                    table.remove(value.specialEffects, i)
+                    value.speed = enemyValues[value.type].speed
+                end
+            end
+
             value.x = value.x + value.speed * dt
         end
 
@@ -138,7 +168,7 @@ function enemy.Create(lineNum, xPos, enemyType)
             isSlowed = false,   timeSlowed = 0,     timeToSlow = 0, -- This is for slowing
             onDot = false,      timeToDot = 0,      timeInDot = 0, dotDamage = 0, -- this is for DOT
             isObsidian = false, timeToObsidian = 0, timeObsidian = 0, -- this is for obsidian effect
-            
+            specialEffects = {}, -- I should've done this for all the effects... anywasy this is for tile effects
         })
         
         map.enemyLanes[lineNum] = true

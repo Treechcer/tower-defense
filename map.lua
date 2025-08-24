@@ -39,20 +39,24 @@ map = {
     },
 
     specialTiles = {}, -- these are the special tiles, ther will be all tiles but some will be false and others will be true, true are special false are normal - these tiles can be special in any shape or form
-    specialTilesAbility = {} -- here will be store all of the special tile abilities, for example, if there is on x = 2 a y = 2 special tile that you can't place on, in specialTiles will be on index [2][2] true, and in this table will be store what it does (this sounded as the fastest and easiest way to implement this)
+    specialTilesAbility = {}, -- here will be store all of the special tile abilities, for example, if there is on x = 2 a y = 2 special tile that you can't place on, in specialTiles will be on index [2][2] true, and in this table will be store what it does (this sounded as the fastest and easiest way to implement this)
+    specialTilesEffect = {}, -- here are the effects of the special tiles (like hwo strong they're ebcause I couldn't make it more complicated)
 }
 
 function map.generateSpecialTiles()
     for y = 1, map.height do
         local specialTileTable = {}
         local specialAbilityTable = {}
+        local specialTableEffect = {}
         for x = 1, map.width do
             specialTileTable[x] = false
             specialAbilityTable[x] = nil
+            specialTableEffect[x] = nil
         end
 
         map.specialTiles[y] = specialTileTable
         map.specialTilesAbility[y] = specialAbilityTable
+        map.specialTilesEffect[y] = specialTableEffect
     end
 end
 
@@ -64,6 +68,7 @@ function map.makeSpecialTile(tileObj)
 
     map.specialTiles[tileObj.y][tileObj.x] = true
     map.specialTilesAbility[tileObj.y][tileObj.x] = tileObj.ability
+    map.specialTilesEffect[tileObj.y][tileObj.x] = tileObj.effect
 
     --print(map.specialTilesAbility[tileObj.y][tileObj.x], tileObj.y, tileObj.x)
 end
@@ -109,6 +114,7 @@ function map.reset()
 
     map.specialTiles = {}
     map.specialTilesAbility = {}
+    map.specialTilesEffect = {}
 
     map.generateSpecialTiles()
 end
@@ -177,6 +183,13 @@ function map.doAbilityOfTile(ability)
         obj = {
             draw = false,
             place = false
+        }
+
+        return obj
+    elseif ability == "slow" then
+        obj = {
+            draw = false,
+            place = true
         }
 
         return obj

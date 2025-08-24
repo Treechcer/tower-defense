@@ -19,6 +19,7 @@ level = {
         },
         specialTiles = {
             --{x = 4, y = 4, ability = "noPlace"}
+            {x = 4, y = 5, ability = "slow", effect = 40}
         },
 
         warmupTime = 1,
