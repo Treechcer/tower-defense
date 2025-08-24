@@ -114,7 +114,7 @@ function defenseValues.shooter.shoot(shooter)
     end
 
     if map.enemyLanes[shooter.y] and shooter.cooldown >= defenseValues[shooter.defense].shootCoolDown and shoot then
-        projectile.create(((shooter.x - 1) * map.blockSize) + (map.blockSize * 1.75 + map.blockSize / 3), ((shooter.y - 1) * map.blockSize) + (map.blockSize / 3), defenseValues[shooter.defense].projectileSpeed, {0,1,1}, defenseValues[shooter.defense].damage, 25, 25, shooter.defense, true, shooter.pierce)
+        projectile.create(((shooter.x - 1) * map.blockSize) + (map.blockSize * 1.75 + map.blockSize / 3), ((shooter.y - 1) * map.blockSize) + (map.blockSize / 3), defenseValues[shooter.defense].projectileSpeed, {0,1,1}, defenseValues[shooter.defense].damage, 25, 25, shooter.defense, true, defenseValues[shooter.defense].pierce)
         shooter.cooldown = 0
 
         --print(defenseValues[shooter.defense].damage)
