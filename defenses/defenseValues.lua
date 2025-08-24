@@ -36,7 +36,7 @@ defenseValues = {
         cost = 175,
         plantCoolDown = 12,
         hp = 100,
-        damage = 6.5,
+        damage = 10,
         projSpeciality = {name = "slow", effect = 40, effectTime = 2.5, type = "watter"},
         projectileSpeed = 275,
         pierce = 1,
@@ -53,7 +53,7 @@ defenseValues = {
         cost = 175,
         plantCoolDown = 12,
         hp = 100,
-        damage = 5,
+        damage = 7.5,
         projSpeciality = {name = "dot", effect = 15, effectTime = 1.5, type = "fire"},
         projectileSpeed = 250,
         pierce = 1,
@@ -81,7 +81,7 @@ defenseValues = {
         sprite = {0.4, 0.2, 0.6},
         cost = 75,
         plantCoolDown = 9,
-        hp = 250,
+        hp = 200,
 
         count = 0
     }

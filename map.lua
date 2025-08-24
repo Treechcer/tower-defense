@@ -92,10 +92,6 @@ function map.reset()
         false,
     }
 
-    for key, value in pairs(levelReader.level.metadata.disabledLanes) do
-        print(key, " : ", value)
-    end
-
     for index, value in ipairs(levelReader.level.metadata.disabledLanes) do
         map.disabledLanes[value] = true
     end
