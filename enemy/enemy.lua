@@ -60,6 +60,7 @@ function enemy.die(index, value)
     table.remove(enemy.enemyList, index)
     local line = value.line
     levelReader.alive = levelReader.alive - 1
+    levelReader.percent = (levelReader.enSpawned - levelReader.alive) / levelReader.enCount
     enemy.sortEnemyByLine()
 
     local found = false

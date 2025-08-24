@@ -100,8 +100,6 @@ function levelReader.spawn()
             table.insert(enemy.spawnEnemies, {line = value.line, xPos = 0, enemyType = value.type})
         end
 
-        levelReader.percent = levelReader.enSpawned / levelReader.enCount
-
         local CS = levelReader.level.wave[levelReader.index].customScript
 
         if CS ~= nil then
@@ -115,6 +113,7 @@ function levelReader.spawn()
 end
 
 function levelReader.drawBar()
+    love.graphics.setColor(1, 1, 1, game.levelTransition)
     love.graphics.rectangle("fill", levelReader.bar.x, levelReader.bar.y, levelReader.bar.width, levelReader.bar.height)
 
     love.graphics.setColor(1, 0, 0, game.levelTransition)
@@ -148,6 +147,7 @@ function levelReader.nextLevel()
 
     if not sucess then
         game.world = game.world + 1
+        game.level = 1
         local sucess0, result0 = pcall(levelReader.readLevel, "world" .. game.world .. "/" .. "level" .. game.level)
 
         if not sucess0 then

@@ -69,6 +69,7 @@ function map.makeSpecialTile(tileObj)
 end
 
 function map.reset()
+
     map.lawnMowers = {
         true,
         true,
@@ -80,7 +81,7 @@ function map.reset()
         true,
     }
 
-    map.enemyLanes = {
+    map.disabledLanes = {
         false,
         false,
         false,
@@ -91,7 +92,15 @@ function map.reset()
         false,
     }
 
-    map.disabledLanes = {
+    for key, value in pairs(levelReader.level.metadata.disabledLanes) do
+        print(key, " : ", value)
+    end
+
+    for index, value in ipairs(levelReader.level.metadata.disabledLanes) do
+        map.disabledLanes[value] = true
+    end
+
+    map.enemyLanes = {
         false,
         false,
         false,
