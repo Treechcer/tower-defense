@@ -28,8 +28,6 @@ function love.draw()
 end
 
 function love.update(dt)
-    dt = dt * 2
-
     game.isRunning = levelReader.transition(dt)
 
     if game.isRunning then
